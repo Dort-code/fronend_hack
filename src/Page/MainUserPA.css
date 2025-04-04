@@ -1,0 +1,154 @@
+.main-user-pa {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.upcoming-conference, .conference-history {
+    margin-bottom: 3rem;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.conference-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 0.8rem;
+}
+
+.detail-label {
+    font-weight: bold;
+    min-width: 120px;
+    color: #555;
+}
+
+.detail-value {
+    flex: 1;
+}
+
+.link {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.pin-form {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.pin-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.pin-form input {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+    margin-right: 0.5rem;
+}
+
+.submit-pin {
+    padding: 0.5rem 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-pin:hover {
+    background-color: #2980b9;
+}
+
+.history-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.table-header, .table-row {
+    display: flex;
+    padding: 0.8rem;
+}
+
+.table-header {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.header-cell {
+    flex: 1;
+}
+
+.table-row:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.table-cell {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.status-badge {
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.status-badge.completed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.processing {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.document-link {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.document-link:hover {
+    text-decoration: underline;
+}
+
+.loading, .error, .no-conference, .no-history {
+    padding: 1rem;
+    text-align: center;
+    color: #666;
+}
+
+.error {
+    color: #dc3545;
+}
