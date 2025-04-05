@@ -41,6 +41,9 @@ export function LoginPage({ onLogin, onClose }) {
         if (username === 'user' && password === 'user123') {
             return { authenticated: true, role: 'user' };
         }
+        if (username === 'pred' && password === 'pred123') {
+            return { authenticated: true, role: 'pred' };
+        }
         return { authenticated: false };
     };
 

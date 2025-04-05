@@ -219,7 +219,7 @@ export function HederAdminPA({ onLogout }) {
                 {!activeForm && (
                     <div className="empty-state">
                         <h3>Выберите раздел для работы</h3>
-                        <p>Используйте меню в верхнем правом углу для навигации</p>
+                        <p>Используйте меня в верхнем левом углу для навигации</p>
                     </div>
                 )}
             </div>
