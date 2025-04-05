@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaTrash } from 'react-icons/fa';
-
+import './Groups.css';
 export function GroupsList({ groups, selectGroup, deleteGroup }) {
     return (
         <div className="groups-list">

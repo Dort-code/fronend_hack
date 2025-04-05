@@ -11,6 +11,7 @@ import {
     FaPlus,
     FaMinus
 } from 'react-icons/fa';
+import './GroupDetails.css';
 
 export function GroupDetails({
                                  group,

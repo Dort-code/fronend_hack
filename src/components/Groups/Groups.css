@@ -1,181 +1,176 @@
 :root {
-    /* Цвета */
-    --primary: #2196F3;
-    --success: #4CAF50;
-    --danger: #f44336;
-    --warning: #ff9800;
-    --dark: #2c3e50;
-    --gray: #6c757d;
-    --light-gray: #f8f9fa;
-    --white: #fff;
-    --chairman-bg: #e3f2fd;
-
-    /* Тени и скругления */
-    --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
-    --shadow-md: 0 5px 15px rgba(0,0,0,0.1);
-    --radius-sm: 4px;
+    --primary: #4361ee;
+    --primary-hover: #3a56d4;
+    --danger: #ff3d3d;
+    --danger-hover: #e53935;
+    --text-dark: #2b2d42;
+    --text-gray: #6c757d;
+    --bg-white: #ffffff;
+    --bg-hover: #f8f9fa;
+    --border-light: #e9ecef;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --radius-sm: 6px;
     --radius-md: 8px;
     --radius-lg: 12px;
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Базовые стили */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: var(--dark);
-    line-height: 1.5;
-}
-
-/* Утилитарные классы */
-.flex { display: flex; }
-.flex-center { display: flex; align-items: center; }
-.gap-5 { gap: 5px; }
-.gap-10 { gap: 10px; }
-.gap-15 { gap: 15px; }
-
-/* Компоненты */
-.group-details-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Шапка группы */
-.group-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
-}
-
-/* Кнопки */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 8px 15px;
-    border-radius: var(--radius-sm);
-    font-size: 0.9em;
-    transition: all 0.2s;
-    cursor: pointer;
-    border: none;
-}
-
-.btn-primary {
-    background: var(--primary);
-    color: var(--white);
-}
-
-.btn-danger {
-    background: var(--danger);
-    color: var(--white);
-}
-
-.btn-gray {
-    background: var(--gray);
-    color: var(--white);
-}
-
-.btn:hover:not(:disabled) {
-    filter: brightness(95%);
-    transform: translateY(-1px);
-}
-
-.btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Карточки пользователей */
-.users-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.user-card {
-    background: var(--white);
-    padding: 15px;
-    border-radius: var(--radius-sm);
+.groups-list {
+    background: var(--bg-white);
+    border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    transition: all 0.2s;
-    border-left: 4px solid transparent;
+    padding: 1.5rem;
+    transition: var(--transition);
 }
 
-.user-card:hover {
-    transform: translateY(-3px);
+.groups-list:hover {
     box-shadow: var(--shadow-md);
 }
 
-.user-card.chairman {
-    background-color: var(--chairman-bg);
-    border-left-color: var(--primary);
+.groups-list h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-light);
 }
 
-/* Секция документов */
-.documents-section {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: var(--light-gray);
-    border-radius: var(--radius-md);
-}
-
-.document-upload {
+.groups-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    align-items: center;
-    gap: 15px;
-    margin: 15px 0;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
-.document-item {
+.group-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: var(--white);
+    background: var(--bg-white);
     border-radius: var(--radius-sm);
-    margin-bottom: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 1rem;
+    border: 1px solid var(--border-light);
+    transition: var(--transition);
+}
+
+.group-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--primary);
+}
+
+.group-info {
+    flex: 1;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .group-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+.group-name {
+    font-weight: 600;
+    color: var(--text-dark);
+    grid-column: 1 / -1;
+}
+
+.group-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.group-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+.group-link p {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.users-count {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.users-count p {
+    margin: 0;
+}
+
+.delete-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--danger);
+    color: var(--bg-white);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-left: 1rem;
+}
+
+.delete-btn:hover {
+    background: var(--danger-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.delete-btn:active {
+    transform: translateY(0);
+}
+
+.empty-state {
+    color: var(--text-gray);
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 0.95rem;
 }
 
 /* Анимации */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+.group-item {
+    animation: fadeIn 0.3s ease forwards;
 }
 
 /* Адаптивность */
-@media (max-width: 768px) {
-    .group-header {
+@media (max-width: 480px) {
+    .group-item {
         flex-direction: column;
         align-items: flex-start;
-        gap: 15px;
+        gap: 1rem;
     }
 
-    .users-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .user-card {
-        padding: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    .group-details-container {
-        padding: 15px;
-    }
-
-    .document-upload {
-        flex-direction: column;
-        align-items: stretch;
+    .delete-btn {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
     }
 }
