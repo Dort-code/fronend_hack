@@ -5,11 +5,13 @@ import { GroupDetails } from '../components/Groups/GroupDetails';
 import { Results } from '../components/Results/Results';
 import './HederAdminPA.css';
 
-export function HederAdminPA() {
+export function HederAdminPA({ onLogout }) {
     const [menuList] = useState([
         { id: 1, text: "Группы", form: "groups" },
         { id: 2, text: "Итоги", form: "results" }
     ]);
+
+
 
     const [showMenu, setShowMenu] = useState(false);
     const [activeForm, setActiveForm] = useState(null);
@@ -19,8 +21,9 @@ export function HederAdminPA() {
     const [newGroupLink, setNewGroupLink] = useState("");
     const menuRef = useRef(null);
 
-    const handleLogout = () => {
+    const handleLogoutClick = () => {
         console.log('User logged out');
+        onLogout(); // Вызываем функцию logout из пропсов
     };
 
     const toggleMenu = () => {
@@ -118,7 +121,7 @@ export function HederAdminPA() {
         <div className="admin-container">
             <HeaderAD
                 toggleMenu={toggleMenu}
-                handleLogout={handleLogout}
+                handleLogout={handleLogoutClick}
                 showMenu={showMenu}
                 menuRef={menuRef}
             >

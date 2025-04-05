@@ -1,10 +1,10 @@
-import {HederUserPA} from "./HederUserPA";
-import {MainUserPA} from "./MainUserPA";
+import { MainUserPA } from "./MainUserPA";
+import { HederUserPA } from "./HederUserPA";
 
-export function UserPA() {
+export function UserPA({ onLogout }) {
     return(
         <>
-            <HederUserPA />
+            <HederUserPA onLogout={onLogout} />
             <MainUserPA />
         </>
     );

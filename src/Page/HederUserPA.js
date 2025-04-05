@@ -3,7 +3,7 @@ import {FaBell, FaSignOutAlt} from "react-icons/fa";
 import logo from "./TNS_Energo_logo.png";
 import './HederUserPA.css';
 
-export function HederUserPA(){
+export function HederUserPA({ onLogout }){
     const [notificationsList, setNotificationsList] = useState([
         { id: 1, text: "Новое сообщение", read: false },
         { id: 2, text: "Обновление системы", read: false }
@@ -13,9 +13,7 @@ export function HederUserPA(){
     const [showNotifications, setShowNotifications] = useState(false);
     const notificationsRef = useRef(null);
 
-    const handleLogout = () => {
-        console.log('User logged out');
-    };
+
 
     const toggleNotifications = () => {
         const newShowState = !showNotifications;
@@ -26,11 +24,9 @@ export function HederUserPA(){
         }
     };
 
-    // Закрытие уведомлений при клике вне области
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (notificationsRef.current && !notificationsRef.current.contains(event.target)) {
-                // Проверяем, что клик не по кнопке уведомлений
                 if (!event.target.closest('.notification-btn')) {
                     setShowNotifications(false);
                 }
@@ -68,7 +64,8 @@ export function HederUserPA(){
 
             <button
                 className="logout-btn"
-                onClick={handleLogout}
+                onClick={onLogout}
+                onClick={onLogout}
                 aria-label="Выход"
             >
                 <FaSignOutAlt size={20} />

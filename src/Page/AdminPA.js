@@ -1,9 +1,9 @@
 import {HederAdminPA} from "./HederAdminPA";
 
-export function AdminPA() {
+export function AdminPA({onLogout}) {
     return(
         <>
-            <HederAdminPA />
+            <HederAdminPA onLogout={onLogout} />
         </>
     );
 }
