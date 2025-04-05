@@ -1,11 +1,10 @@
 import {useState} from 'react';
-import './Registration.css'; // Импорт стилей
-import React from 'react';
+import './Registration.css';
 
 export function Registration() {
     const [formData, setFormData] = useState({
         name: '',
-        lastname: '',
+        lastName: '',
         surname: '',
         login: '',
         password: '',
@@ -15,7 +14,23 @@ export function Registration() {
 
     const handleSubmit = function (e) {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+
+        // Заглушка: просто выводим данные формы в консоль
+        console.log('Данные формы:', formData);
+
+        // Можно добавить здесь имитацию отправки на сервер
+        alert(`Регистрация успешна!\nЛогин: ${formData.login}\nEmail: ${formData.email}`);
+
+        // Очищаем форму
+        setFormData({
+            name: '',
+            lastName: '',
+            surname: '',
+            login: '',
+            password: '',
+            email: '',
+            token: '',
+        });
     };
 
     const handleInputChange = function (e) {
@@ -29,14 +44,14 @@ export function Registration() {
                 <h1 className="form-title">Добро пожаловать!</h1>
                 <form onSubmit={handleSubmit} className="form">
                     {createInputField('name', 'Имя', formData.name, handleInputChange, 'text')}
-                    {createInputField('lastName', 'Фамилия', formData.lastname, handleInputChange, 'text')}
+                    {createInputField('lastName', 'Фамилия', formData.lastName, handleInputChange, 'text')}
                     {createInputField('surname', 'Отчество', formData.surname, handleInputChange, 'text')}
                     {createInputField('login', 'Логин', formData.login, handleInputChange, 'text')}
                     {createInputField('password', 'Пароль', formData.password, handleInputChange, 'password')}
-                    {createInputField('email', 'Почта', formData.email, handleInputChange, 'text')}
+                    {createInputField('email', 'Почта', formData.email, handleInputChange, 'email')}
                     {createInputField('token', 'Токен', formData.token, handleInputChange, 'text')}
                     <button type="submit" className="submit-button">
-                        Вход
+                        Зарегистрироваться
                     </button>
                 </form>
             </div>
