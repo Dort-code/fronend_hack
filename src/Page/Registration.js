@@ -8,7 +8,6 @@ export function Registration() {
         surname: '',
         login: '',
         password: '',
-        email: '',
         token: '',
     });
 
@@ -28,7 +27,6 @@ export function Registration() {
             surname: '',
             login: '',
             password: '',
-            email: '',
             token: '',
         });
     };
@@ -48,7 +46,6 @@ export function Registration() {
                     {createInputField('surname', 'Отчество', formData.surname, handleInputChange, 'text')}
                     {createInputField('login', 'Логин', formData.login, handleInputChange, 'text')}
                     {createInputField('password', 'Пароль', formData.password, handleInputChange, 'password')}
-                    {createInputField('email', 'Почта', formData.email, handleInputChange, 'email')}
                     {createInputField('token', 'Токен', formData.token, handleInputChange, 'text')}
                     <button type="submit" className="submit-button">
                         Зарегистрироваться
