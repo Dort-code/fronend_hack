@@ -1,11 +1,11 @@
-import { MainUserPA } from "./MainUserPA";
-import { HederUserPA } from "./HederUserPA";
+import { MainPredPA } from "./MainUserPA";
+import { HederPredPA } from "./HederUserPA";
 
-export function UserPA({ onLogout }) {
+export function PredPA({ onLogout }) {
     return(
         <>
-            <HederUserPA onLogout={onLogout} />
-            <MainUserPA />
+            <HederPredPA onLogout={onLogout} />
+            <MainPredPA />
         </>
     );
 }
