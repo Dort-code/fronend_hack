@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52bf67c3-d63c-45ea-a9ff-45fde35573e7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Page/HederPredPa.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Page/HederPredPa.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Page/MainPredPa.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Page/MainPredPa.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Page/PredPA.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Page/HederAdminPA.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Page/HederAdminPA.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Page/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Page/LoginPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Page/UserPA.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Page/UserPA.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Groups/GroupForm.js" beforeDir="false" />
-    </list>
+    <list default="true" id="52bf67c3-d63c-45ea-a9ff-45fde35573e7" name="Changes" comment="Aboba" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -148,8 +133,17 @@
       <workItem from="1743779253957" duration="2392000" />
       <workItem from="1743788839249" duration="177000" />
       <workItem from="1743789839720" duration="28320000" />
-      <workItem from="1743851232294" duration="2844000" />
+      <workItem from="1743851232294" duration="3532000" />
     </task>
+    <task id="LOCAL-00001" summary="Aboba">
+      <option name="closed" value="true" />
+      <created>1743854150962</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743854150962</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,5 +159,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Aboba" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aboba" />
   </component>
 </project>
