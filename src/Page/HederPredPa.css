@@ -6,20 +6,32 @@
     background-color: #ffffff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
-    height: 60px;
+    height: 70px;
+    z-index: 100;
+}
+
+.header-left, .header-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.header-right {
+    justify-content: flex-end;
 }
 
 /* Кнопка уведомлений */
 .notification-btn {
-    position: absolute;
-    left: 20px;
     background: none;
     border: none;
     cursor: pointer;
     color: #333;
     padding: 8px;
-    border-radius: 50%;
+    border-radius: 4px;
     transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
 .notification-btn:hover {
@@ -43,9 +55,9 @@
 
 /* Логотип */
 .logo-container {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .logo {
@@ -53,190 +65,182 @@
     width: auto;
 }
 
+.user-role {
+    margin-top: 5px;
+    background-color: #f0f7ff;
+    color: #0066cc;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
 /* Кнопка выхода */
 .logout-btn {
-    position: absolute;
-    right: 20px;
     background: none;
     border: none;
     cursor: pointer;
     color: #333;
-    padding: 8px;
-    border-radius: 50%;
+    padding: 8px 12px;
+    border-radius: 4px;
     transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .logout-btn:hover {
     background-color: #f0f0f0;
 }
 
+.logout-text {
+    font-size: 0.9rem;
+}
+
 /* Выпадающее меню уведомлений */
 .notification-dropdown {
+    color: black;
     position: absolute;
     top: 100%;
     left: 20px;
-    width: 300px;
-    max-height: 400px;
+    width: 350px;
+    max-height: 500px;
     overflow-y: auto;
     background: white;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     z-index: 1000;
-    padding: 10px;
     animation: fadeIn 0.2s ease-in-out;
 }
 
-.notification-dropdown ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.notification-dropdown li {
-    padding: 8px 0;
+.dropdown-header {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
     border-bottom: 1px solid #eee;
 }
 
-.notification-dropdown li.unread {
-    font-weight: bold;
-}
-
-.notification-dropdown li.read {
-    color: #666;
-}
-
-.notification-dropdown p {
+.dropdown-header h4 {
     margin: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.unread-count {
+    background-color: #f0f7ff;
+    color: #0066cc;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+.notifications-list {
+    padding: 8px 0;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+    color: black;
+    background-color: #f9f9f9;
+}
+
+.notification-item.unread {
+    color: black;
+    background-color: #f8fafd;
+}
+
+.notification-icon {
+    margin-right: 12px;
     color: #666;
-    text-align: center;
+    font-size: 1.1rem;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-text {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.notification-date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.notification-chevron {
+    color: #999;
+    font-size: 0.9rem;
+    margin-left: 8px;
+}
+
+.protocol-submenu {
+    background-color: #f9f9f9;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin: 4px 0;
+}
+
+.protocol-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px 10px 44px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.protocol-item:hover {
+    background-color: #f0f7ff;
+}
+
+.protocol-icon {
+    margin-right: 12px;
+    color: #4a6bdf;
+    font-size: 1rem;
+}
+
+.protocol-content {
+    flex: 1;
+}
+
+.protocol-text {
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+}
+
+.protocol-date {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+/* Основная область контента */
+.pred-content-area {
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.content-section {
+    color: black;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
-}
-/* Стили для кнопки входа/выхода */
-.login-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: #4361ee;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.login-btn:hover {
-    background: #3a56d4;
-}
-
-.login-text {
-    font-size: 14px;
-}
-
-/* Стили для модального окна */
-.login-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.login-modal {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 400px;
-    position: relative;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.close-modal-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #6c757d;
-    font-size: 1.2rem;
-}
-
-.login-modal h3 {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    color: #2b2d42;
-    text-align: center;
-}
-
-.form-group {
-    margin-bottom: 1.2rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: #495057;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.submit-btn {
-    width: 100%;
-    padding: 0.75rem;
-    background: #4361ee;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-top: 1rem;
-    transition: all 0.3s ease;
-}
-
-.submit-btn:hover {
-    background: #3a56d4;
-}
-
-/* Основное содержимое */
-.main-content {
-    padding: 2rem;
-}
-
-.welcome-message {
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.welcome-message h2 {
-    color: #2b2d42;
-    margin-bottom: 1rem;
-}
-
-.welcome-message p {
-    color: #6c757d;
-    font-size: 1.1rem;
 }
