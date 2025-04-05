@@ -35,7 +35,7 @@ export function HederAdminPA() {
 
     const createGroup = () => {
         if (newGroupName.trim() && newGroupLink.trim()) {
-            const isTestGroup = newGroupName === 'АбуБандиты' && newGroupLink === 'Черти';
+            const isTestGroup = newGroupName === 'Test' && newGroupLink === 'Test';
 
             const newGroup = {
                 id: Date.now(),
@@ -44,9 +44,9 @@ export function HederAdminPA() {
                 conferenceLink: "",
                 documents: [],
                 users: isTestGroup ? [
-                    { id: 1, name: 'Абу1', isChairman: false },
-                    { id: 2, name: 'Абу2', isChairman: false },
-                    { id: 3, name: 'Абу3', isChairman: false }
+                    { id: 1, name: 'us1', isChairman: false },
+                    { id: 2, name: 'us2', isChairman: false },
+                    { id: 3, name: 'us3', isChairman: false }
                 ] : []
             };
 
@@ -115,7 +115,7 @@ export function HederAdminPA() {
     };
 
     return (
-        <div className="header-container">
+        <div className="admin-container">
             <HeaderAD
                 toggleMenu={toggleMenu}
                 handleLogout={handleLogout}
@@ -129,7 +129,7 @@ export function HederAdminPA() {
                                 <li
                                     key={menu.id}
                                     onClick={() => handleMenuItemClick(menu.form)}
-                                    className="menu-item"
+                                    className={`menu-item ${activeForm === menu.form ? 'active' : ''}`}
                                 >
                                     {menu.text}
                                 </li>
@@ -139,34 +139,40 @@ export function HederAdminPA() {
                 )}
             </HeaderAD>
 
-            {activeForm === 'groups' && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
+            <div className="admin-content-area">
+                {activeForm === 'groups' && (
+                    <div className="content-section">
                         {!selectedGroup ? (
                             <>
-                                <h2>Управление группами</h2>
-                                <div className="group-form">
-                                    <input
-                                        type="text"
-                                        placeholder="Название группы"
-                                        value={newGroupName}
-                                        onChange={(e) => setNewGroupName(e.target.value)}
-                                        className="input"
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Ссылка на группу"
-                                        value={newGroupLink}
-                                        onChange={(e) => setNewGroupLink(e.target.value)}
-                                        className="input"
-                                    />
-                                    <button
-                                        onClick={createGroup}
-                                        className="btn btn-primary"
-                                        disabled={!newGroupName.trim() || !newGroupLink.trim()}
-                                    >
-                                        Создать группу
-                                    </button>
+                                <div className="section-header">
+                                    <h2>Управление группами</h2>
+                                    <div className="creation-form">
+                                        <div className="input-group">
+                                            <input
+                                                type="text"
+                                                placeholder="Название группы"
+                                                value={newGroupName}
+                                                onChange={(e) => setNewGroupName(e.target.value)}
+                                                className="text-input"
+                                            />
+                                        </div>
+                                        <div className="input-group">
+                                            <input
+                                                type="text"
+                                                placeholder="Ссылка на группу"
+                                                value={newGroupLink}
+                                                onChange={(e) => setNewGroupLink(e.target.value)}
+                                                className="text-input"
+                                            />
+                                        </div>
+                                        <button
+                                            onClick={createGroup}
+                                            className="action-button"
+                                            disabled={!newGroupName.trim() || !newGroupLink.trim()}
+                                        >
+                                            <span>+</span> Создать группу
+                                        </button>
+                                    </div>
                                 </div>
                                 <GroupsList
                                     groups={groups}
@@ -199,10 +205,21 @@ export function HederAdminPA() {
                             />
                         )}
                     </div>
-                </div>
-            )}
+                )}
 
-            {activeForm === 'results' && <Results onClose={() => setActiveForm(null)} />}
+                {activeForm === 'results' && (
+                    <div className="content-section">
+                        <Results onClose={() => setActiveForm(null)} />
+                    </div>
+                )}
+
+                {!activeForm && (
+                    <div className="empty-state">
+                        <h3>Выберите раздел для работы</h3>
+                        <p>Используйте меню в верхнем правом углу для навигации</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

@@ -20,10 +20,11 @@ export function GroupsList({ groups, selectGroup, deleteGroup }) {
                                     rel="noopener noreferrer"
                                     className="group-link"
                                 >
-                                    <FaLink /> {group.link}
+                                    <p> {group.link}</p>
                                 </a>
                                 <span className="users-count">
-                                    Участников: {group.users.length}
+                                    <p> Участников: {group.users.length}</p>
+
                                 </span>
                             </div>
                             <button
@@ -33,7 +34,7 @@ export function GroupsList({ groups, selectGroup, deleteGroup }) {
                                 }}
                                 className="delete-btn"
                             >
-                                <FaTrash />
+                                <FaTrash /> Удалить
                             </button>
                         </li>
                     ))}
