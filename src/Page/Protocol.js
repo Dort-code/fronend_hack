@@ -1,172 +1,262 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { FaTimes, FaSave, FaFilePdf } from 'react-icons/fa';
 import './Protocol.css';
 
-export function Protocol({ onClose }) {
+export function Protocol({ protocol, onClose }) {
+    const API_BASE_URL = 'https://your-api-endpoint.com/api';
     const [activeForm, setActiveForm] = useState('protocol');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
 
-    // Данные для формы протокола
-    const [protocolData, setProtocolData] = useState({
+    // Данные форм
+    const [formData, setFormData] = useState({
         protocolNumber: '',
-        submissionDeadline: '',
-        votingLocation: '',
-        protocolDate: '',
-        participants: '',
-        voteCounter: '',
-        questions: [{ text: '', description: '', results: '' }]
+        date: '',
+        participants: [],
+        questions: []
     });
 
-    // Данные для формы проекта решения
     const [resolutionData, setResolutionData] = useState({
         date: '',
-        questions: [{ text: '', resolution: '' }]
+        decisions: []
     });
 
+    // Загрузка данных протокола
+    useEffect(() => {
+        if (protocol) {
+            const fetchProtocolData = async () => {
+                setIsLoading(true);
+                try {
+                    const response = await fetch(`${API_BASE_URL}/protocols/${protocol.id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+
+                    if (!response.ok) throw new Error('Ошибка загрузки протокола');
+
+                    const data = await response.json();
+                    setFormData(data.protocol);
+                    setResolutionData(data.resolution);
+                } catch (err) {
+                    setError(err.message);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+
+            fetchProtocolData();
+        } else {
+            // Инициализация пустых форм
+            setFormData({
+                protocolNumber: '',
+                date: new Date().toISOString().split('T')[0],
+                participants: [],
+                questions: [{
+                    text: '',
+                    description: '',
+                    results: ''
+                }]
+            });
+
+            setResolutionData({
+                date: new Date().toISOString().split('T')[0],
+                decisions: [{
+                    question: '',
+                    resolution: ''
+                }]
+            });
+        }
+    }, [protocol]);
+
     // Обработчики для формы протокола
-    const handleProtocolInputChange = (e) => {
+    const handleProtocolChange = (e) => {
         const { name, value } = e.target;
-        setProtocolData({ ...protocolData, [name]: value });
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleProtocolQuestionChange = (index, e) => {
+    const handleQuestionChange = (index, e) => {
         const { name, value } = e.target;
-        const updatedQuestions = [...protocolData.questions];
-        updatedQuestions[index][name] = value;
-        setProtocolData({ ...protocolData, questions: updatedQuestions });
+        const updatedQuestions = [...formData.questions];
+        updatedQuestions[index] = { ...updatedQuestions[index], [name]: value };
+        setFormData(prev => ({ ...prev, questions: updatedQuestions }));
     };
 
-    const addProtocolQuestion = () => {
-        setProtocolData({
-            ...protocolData,
-            questions: [...protocolData.questions, { text: '', description: '', results: '' }]
-        });
+    const addQuestion = () => {
+        setFormData(prev => ({
+            ...prev,
+            questions: [
+                ...prev.questions,
+                { text: '', description: '', results: '' }
+            ]
+        }));
     };
 
-    const removeProtocolQuestion = (index) => {
-        const updatedQuestions = [...protocolData.questions];
+    const removeQuestion = (index) => {
+        const updatedQuestions = [...formData.questions];
         updatedQuestions.splice(index, 1);
-        setProtocolData({ ...protocolData, questions: updatedQuestions });
+        setFormData(prev => ({ ...prev, questions: updatedQuestions }));
     };
 
-    const saveProtocol = () => {
-        console.log('Сохраненные данные протокола:', protocolData);
-        onClose();
-    };
-
-    // Обработчики для формы проекта решения
-    const handleResolutionInputChange = (e) => {
+    // Обработчики для формы решения
+    const handleResolutionChange = (e) => {
         const { name, value } = e.target;
-        setResolutionData({ ...resolutionData, [name]: value });
+        setResolutionData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleResolutionQuestionChange = (index, e) => {
+    const handleDecisionChange = (index, e) => {
         const { name, value } = e.target;
-        const updatedQuestions = [...resolutionData.questions];
-        updatedQuestions[index][name] = value;
-        setResolutionData({ ...resolutionData, questions: updatedQuestions });
+        const updatedDecisions = [...resolutionData.decisions];
+        updatedDecisions[index] = { ...updatedDecisions[index], [name]: value };
+        setResolutionData(prev => ({ ...prev, decisions: updatedDecisions }));
     };
 
-    const addResolutionQuestion = () => {
-        setResolutionData({
-            ...resolutionData,
-            questions: [...resolutionData.questions, { text: '', resolution: '' }]
-        });
+    const addDecision = () => {
+        setResolutionData(prev => ({
+            ...prev,
+            decisions: [
+                ...prev.decisions,
+                { question: '', resolution: '' }
+            ]
+        }));
     };
 
-    const removeResolutionQuestion = (index) => {
-        const updatedQuestions = [...resolutionData.questions];
-        updatedQuestions.splice(index, 1);
-        setResolutionData({ ...resolutionData, questions: updatedQuestions });
+    const removeDecision = (index) => {
+        const updatedDecisions = [...resolutionData.decisions];
+        updatedDecisions.splice(index, 1);
+        setResolutionData(prev => ({ ...prev, decisions: updatedDecisions }));
     };
 
-    const saveResolution = () => {
-        console.log('Сохраненные данные проекта решения:', resolutionData);
-        onClose();
+    // Сохранение данных
+    const saveProtocol = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch(`${API_BASE_URL}/protocols`, {
+                method: protocol ? 'PUT' : 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    protocol: formData,
+                    resolution: resolutionData
+                })
+            });
+
+            if (!response.ok) throw new Error('Ошибка сохранения протокола');
+
+            onClose();
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Генерация PDF
+    const generatePDF = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch(`${API_BASE_URL}/protocols/generate-pdf`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    protocol: formData,
+                    resolution: resolutionData
+                })
+            });
+
+            if (!response.ok) throw new Error('Ошибка генерации PDF');
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `Протокол_${formData.protocolNumber || 'новый'}.pdf`;
+            link.click();
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
-        <div className="modal-overlay">
-            <div className="modal-content">
-                <h2>Просмотр итогов</h2>
+        <div className="protocol-modal-overlay">
+            <div className="protocol-modal-content">
+                <button
+                    className="close-modal"
+                    onClick={onClose}
+                    disabled={isLoading}
+                >
+                    <FaTimes />
+                </button>
 
-                <div className="form-buttons">
+                <h2>{protocol ? 'Редактирование протокола' : 'Создание нового протокола'}</h2>
+
+                <div className="form-tabs">
                     <button
+                        className={`tab-button ${activeForm === 'protocol' ? 'active' : ''}`}
                         onClick={() => setActiveForm('protocol')}
-                        className={activeForm === 'protocol' ? 'active' : ''}
                     >
                         Протокол
                     </button>
                     <button
+                        className={`tab-button ${activeForm === 'resolution' ? 'active' : ''}`}
                         onClick={() => setActiveForm('resolution')}
-                        className={activeForm === 'resolution' ? 'active' : ''}
                     >
                         Проект решения
                     </button>
                 </div>
 
+                {isLoading && <div className="loading-overlay">Загрузка...</div>}
+                {error && <div className="error-message">{error}</div>}
+
                 {activeForm === 'protocol' && (
-                    <div className="form-section">
+                    <div className="protocol-form">
                         <div className="form-group">
                             <label>Номер протокола:</label>
                             <input
                                 type="text"
                                 name="protocolNumber"
-                                value={protocolData.protocolNumber}
-                                onChange={handleProtocolInputChange}
+                                value={formData.protocolNumber}
+                                onChange={handleProtocolChange}
+                                disabled={!isEditing && protocol}
                             />
                         </div>
 
                         <div className="form-group">
-                            <label>Дата и время окончания приема документов:</label>
-                            <input
-                                type="datetime-local"
-                                name="submissionDeadline"
-                                value={protocolData.submissionDeadline}
-                                onChange={handleProtocolInputChange}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label>Место проведения голосования:</label>
-                            <input
-                                type="text"
-                                name="votingLocation"
-                                value={protocolData.votingLocation}
-                                onChange={handleProtocolInputChange}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label>Дата составления протокола:</label>
+                            <label>Дата составления:</label>
                             <input
                                 type="date"
-                                name="protocolDate"
-                                value={protocolData.protocolDate}
-                                onChange={handleProtocolInputChange}
+                                name="date"
+                                value={formData.date}
+                                onChange={handleProtocolChange}
+                                disabled={!isEditing && protocol}
                             />
                         </div>
 
                         <div className="form-group">
-                            <label>Лица, принявшие участие:</label>
-                            <input
-                                type="text"
+                            <label>Участники:</label>
+                            <textarea
                                 name="participants"
-                                value={protocolData.participants}
-                                onChange={handleProtocolInputChange}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label>Лицо, проводящее подсчет голосов:</label>
-                            <input
-                                type="text"
-                                name="voteCounter"
-                                value={protocolData.voteCounter}
-                                onChange={handleProtocolInputChange}
+                                value={formData.participants.join('\n')}
+                                onChange={(e) => handleProtocolChange({
+                                    target: {
+                                        name: 'participants',
+                                        value: e.target.value.split('\n')
+                                    }
+                                })}
+                                disabled={!isEditing && protocol}
                             />
                         </div>
 
                         <h3>Вопросы голосования:</h3>
-                        {protocolData.questions.map((question, index) => (
+                        {formData.questions.map((question, index) => (
                             <div key={index} className="question-group">
                                 <div className="form-group">
                                     <label>Вопрос {index + 1}:</label>
@@ -174,7 +264,8 @@ export function Protocol({ onClose }) {
                                         type="text"
                                         name="text"
                                         value={question.text}
-                                        onChange={(e) => handleProtocolQuestionChange(index, e)}
+                                        onChange={(e) => handleQuestionChange(index, e)}
+                                        disabled={!isEditing && protocol}
                                     />
                                 </div>
 
@@ -183,25 +274,26 @@ export function Protocol({ onClose }) {
                                     <textarea
                                         name="description"
                                         value={question.description}
-                                        onChange={(e) => handleProtocolQuestionChange(index, e)}
+                                        onChange={(e) => handleQuestionChange(index, e)}
+                                        disabled={!isEditing && protocol}
                                     />
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Результаты голосования:</label>
-                                    <input
-                                        type="text"
+                                    <label>Результаты:</label>
+                                    <textarea
                                         name="results"
                                         value={question.results}
-                                        onChange={(e) => handleProtocolQuestionChange(index, e)}
+                                        onChange={(e) => handleQuestionChange(index, e)}
+                                        disabled={!isEditing && protocol}
                                     />
                                 </div>
 
-                                {protocolData.questions.length > 1 && (
+                                {(isEditing || !protocol) && formData.questions.length > 1 && (
                                     <button
                                         type="button"
-                                        className="remove-question"
-                                        onClick={() => removeProtocolQuestion(index)}
+                                        className="remove-button"
+                                        onClick={() => removeQuestion(index)}
                                     >
                                         Удалить вопрос
                                     </button>
@@ -209,81 +301,108 @@ export function Protocol({ onClose }) {
                             </div>
                         ))}
 
-                        <button type="button" className="add-question" onClick={addProtocolQuestion}>
-                            Добавить вопрос
-                        </button>
-
-                        <div className="form-actions">
-                            <button onClick={saveProtocol} className="save-btn">
-                                Сохранить
+                        {(isEditing || !protocol) && (
+                            <button
+                                type="button"
+                                className="add-button"
+                                onClick={addQuestion}
+                            >
+                                Добавить вопрос
                             </button>
-                            <button onClick={onClose} className="close-btn">
-                                Закрыть
-                            </button>
-                        </div>
+                        )}
                     </div>
                 )}
 
                 {activeForm === 'resolution' && (
-                    <div className="form-section">
+                    <div className="resolution-form">
                         <div className="form-group">
-                            <label>Дата:</label>
+                            <label>Дата решения:</label>
                             <input
                                 type="date"
                                 name="date"
                                 value={resolutionData.date}
-                                onChange={handleResolutionInputChange}
+                                onChange={handleResolutionChange}
+                                disabled={!isEditing && protocol}
                             />
                         </div>
 
-                        <h3>Вопросы и проекты решений:</h3>
-                        {resolutionData.questions.map((question, index) => (
-                            <div key={index} className="question-group">
+                        <h3>Принятые решения:</h3>
+                        {resolutionData.decisions.map((decision, index) => (
+                            <div key={index} className="decision-group">
                                 <div className="form-group">
                                     <label>Вопрос {index + 1}:</label>
                                     <input
                                         type="text"
-                                        name="text"
-                                        value={question.text}
-                                        onChange={(e) => handleResolutionQuestionChange(index, e)}
+                                        name="question"
+                                        value={decision.question}
+                                        onChange={(e) => handleDecisionChange(index, e)}
+                                        disabled={!isEditing && protocol}
                                     />
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Проект решения:</label>
+                                    <label>Решение:</label>
                                     <textarea
                                         name="resolution"
-                                        value={question.resolution}
-                                        onChange={(e) => handleResolutionQuestionChange(index, e)}
+                                        value={decision.resolution}
+                                        onChange={(e) => handleDecisionChange(index, e)}
+                                        disabled={!isEditing && protocol}
                                     />
                                 </div>
 
-                                {resolutionData.questions.length > 1 && (
+                                {(isEditing || !protocol) && resolutionData.decisions.length > 1 && (
                                     <button
                                         type="button"
-                                        className="remove-question"
-                                        onClick={() => removeResolutionQuestion(index)}
+                                        className="remove-button"
+                                        onClick={() => removeDecision(index)}
                                     >
-                                        Удалить вопрос
+                                        Удалить решение
                                     </button>
                                 )}
                             </div>
                         ))}
 
-                        <button type="button" className="add-question" onClick={addResolutionQuestion}>
-                            Добавить вопрос
-                        </button>
-
-                        <div className="form-actions">
-                            <button onClick={saveResolution} className="save-btn">
-                                Сохранить
+                        {(isEditing || !protocol) && (
+                            <button
+                                type="button"
+                                className="add-button"
+                                onClick={addDecision}
+                            >
+                                Добавить решение
                             </button>
-                            <button onClick={onClose} className="close-btn">
-                                Закрыть
-                            </button>
-                        </div>
+                        )}
                     </div>
                 )}
+
+                <div className="form-actions">
+                    {protocol && (
+                        <button
+                            className={`toggle-edit-button ${isEditing ? 'cancel' : 'edit'}`}
+                            onClick={() => setIsEditing(!isEditing)}
+                            disabled={isLoading}
+                        >
+                            {isEditing ? 'Отменить редактирование' : 'Редактировать'}
+                        </button>
+                    )}
+
+                    <button
+                        className="generate-pdf-button"
+                        onClick={generatePDF}
+                        disabled={isLoading}
+                    >
+                        <FaFilePdf /> Создать PDF
+                    </button>
+
+                    {(isEditing || !protocol) && (
+                        <button
+                            className="save-button"
+                            onClick={saveProtocol}
+                            disabled={isLoading}
+                        >
+                            <FaSave /> Сохранить
+                        </button>
+                    )}
+                </div>
             </div>
         </div>
     );

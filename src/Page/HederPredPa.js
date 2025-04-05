@@ -1,52 +1,76 @@
-import React, {useEffect, useRef, useState} from "react";
-import {FaSignOutAlt, FaFileAlt, FaChevronDown, FaChevronUp} from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
+import { FaSignOutAlt, FaFileAlt, FaChevronDown, FaChevronUp, FaBell } from "react-icons/fa";
 import { FiAlignJustify } from 'react-icons/fi';
 import { Protocol } from './Protocol';
 import logo from "./TNS_Energo_logo.png";
 import './HederPredPa.css';
 
-export function HederPredPA({ onLogout }){
-    const [notificationsList, setNotificationsList] = useState([
-        { id: 1, text: "Новое сообщение", read: false, date: "2023-11-15 14:30" },
-        { id: 2, text: "Обновление системы", read: false, date: "2023-11-14 10:15" },
-        {
-            id: 3,
-            text: "Протоколы",
-            form: "protocol",
-            items: [
-                { id: 31, text: "Протокол собрания от 10.11.2023", date: "2023-11-10" },
-                { id: 32, text: "Протокол голосования №45", date: "2023-11-05" }
-            ]
-        }
-    ]);
-
+export function HederPredPA({ onLogout }) {
+    const API_BASE_URL = 'https://your-api-endpoint.com/api';
+    const [notifications, setNotifications] = useState([]);
     const [activeForm, setActiveForm] = useState(null);
     const [expandedProtocols, setExpandedProtocols] = useState(false);
     const [selectedProtocol, setSelectedProtocol] = useState(null);
-    const unreadCount = notificationsList.filter(n => !n.read && !n.form).length;
     const [showNotifications, setShowNotifications] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
     const notificationsRef = useRef(null);
 
-    const handleNotificationClick = (notification) => {
-        if (notification.form) {
-            setActiveForm(notification.form);
-            if (notification.form === 'protocol') {
-                setExpandedProtocols(!expandedProtocols);
-            }
-        } else {
-            setShowNotifications(false);
-            if (!notification.read) {
-                setNotificationsList(notificationsList.map(n =>
-                    n.id === notification.id ? {...n, read: true} : n
-                ));
-            }
+    // Загрузка уведомлений
+    const fetchNotifications = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch(`${API_BASE_URL}/notifications`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            if (!response.ok) throw new Error('Ошибка загрузки уведомлений');
+
+            const data = await response.json();
+            setNotifications(data);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    const handleProtocolSelect = (protocol) => {
-        setSelectedProtocol(protocol);
-        setActiveForm('protocol');
-        setShowNotifications(false);
+    // Отметка уведомлений как прочитанных
+    const markAsRead = async (notificationIds) => {
+        try {
+            await fetch(`${API_BASE_URL}/notifications/mark-read`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({ notificationIds })
+            });
+            fetchNotifications();
+        } catch (err) {
+            console.error('Ошибка отметки как прочитано:', err);
+        }
+    };
+
+    useEffect(() => {
+        fetchNotifications();
+        const interval = setInterval(fetchNotifications, 60000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const handleNotificationClick = (notification) => {
+        if (notification.type === 'protocol') {
+            setActiveForm('protocol');
+            setSelectedProtocol(notification);
+            setShowNotifications(false);
+        } else {
+            if (!notification.read) {
+                markAsRead([notification.id]);
+            }
+            // Дополнительная логика для других типов уведомлений
+        }
     };
 
     const toggleNotifications = () => {
@@ -54,10 +78,9 @@ export function HederPredPA({ onLogout }){
         setShowNotifications(newShowState);
         setExpandedProtocols(false);
 
-        if (newShowState && unreadCount > 0) {
-            setNotificationsList(notificationsList.map(n =>
-                !n.form && !n.read ? {...n, read: true} : n
-            ));
+        if (newShowState && notifications.some(n => !n.read)) {
+            const unreadIds = notifications.filter(n => !n.read).map(n => n.id);
+            if (unreadIds.length > 0) markAsRead(unreadIds);
         }
     };
 
@@ -72,10 +95,10 @@ export function HederPredPA({ onLogout }){
         };
 
         document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
+        return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [showNotifications]);
+
+    const unreadCount = notifications.filter(n => !n.read).length;
 
     return (
         <>
@@ -111,58 +134,45 @@ export function HederPredPA({ onLogout }){
                 </div>
 
                 {showNotifications && (
-                    <div
-                        className="notification-dropdown"
-                        ref={notificationsRef}
-                    >
+                    <div className="notification-dropdown" ref={notificationsRef}>
                         <div className="dropdown-header">
                             <h4>Уведомления</h4>
                             <span className="unread-count">{unreadCount} новых</span>
                         </div>
 
-                        <div className="notifications-list">
-                            {notificationsList.map(notification => (
-                                <div key={notification.id}>
+                        {isLoading ? (
+                            <div className="loading-notifications">Загрузка...</div>
+                        ) : error ? (
+                            <div className="error-message">{error}</div>
+                        ) : notifications.length > 0 ? (
+                            <div className="notifications-list">
+                                {notifications.map(notification => (
                                     <div
+                                        key={notification.id}
                                         className={`notification-item ${notification.read ? 'read' : 'unread'}`}
                                         onClick={() => handleNotificationClick(notification)}
                                     >
                                         <div className="notification-icon">
-                                            {notification.form === 'protocol' ? <FaFileAlt /> : null}
+                                            {notification.type === 'protocol' && <FaFileAlt />}
+                                            {notification.type === 'vote' && <FaBell />}
                                         </div>
                                         <div className="notification-content">
-                                            <div className="notification-text">{notification.text}</div>
-                                            <div className="notification-date">{notification.date}</div>
-                                        </div>
-                                        {notification.form === 'protocol' && (
-                                            <div className="notification-chevron">
-                                                {expandedProtocols ? <FaChevronUp /> : <FaChevronDown />}
+                                            <div className="notification-text">{notification.message}</div>
+                                            <div className="notification-date">
+                                                {new Date(notification.createdAt).toLocaleString('ru-RU', {
+                                                    day: 'numeric',
+                                                    month: 'short',
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                })}
                                             </div>
-                                        )}
-                                    </div>
-
-                                    {notification.form === 'protocol' && expandedProtocols && (
-                                        <div className="protocol-submenu">
-                                            {notification.items.map(item => (
-                                                <div
-                                                    key={item.id}
-                                                    className="protocol-item"
-                                                    onClick={() => handleProtocolSelect(item)}
-                                                >
-                                                    <div className="protocol-icon">
-                                                        <FaFileAlt />
-                                                    </div>
-                                                    <div className="protocol-content">
-                                                        <div className="protocol-text">{item.text}</div>
-                                                        <div className="protocol-date">{item.date}</div>
-                                                    </div>
-                                                </div>
-                                            ))}
                                         </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="no-notifications">Новых уведомлений нет</div>
+                        )}
                     </div>
                 )}
             </header>
