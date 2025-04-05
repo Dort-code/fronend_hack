@@ -1,4 +1,5 @@
 import React from 'react';
+import './Results.css';
 
 export function Results({ onClose }) {
     return (

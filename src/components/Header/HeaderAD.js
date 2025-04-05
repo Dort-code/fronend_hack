@@ -4,7 +4,7 @@ import { FiAlignJustify } from 'react-icons/fi';
 import logo from "../../Page/TNS_Energo_logo.png";
 import './HeaderAD.css';
 
-export function HeaderAD({ toggleMenu, handleLogout, showMenu, menuRef, children }) {
+export function HeaderAD({ toggleMenu, handleLogout, showMenu, children }) {
     return (
         <header className="header">
             <button

@@ -10,7 +10,7 @@ export function MainPredPA() {
     const [activeVotes, setActiveVotes] = useState([]);
     const [pastVotes, setPastVotes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error] = useState(null);
     const [selectedVote, setSelectedVote] = useState(null);
     const [selectedOption, setSelectedOption] = useState(null);
     const [hasVoted, setHasVoted] = useState(false);

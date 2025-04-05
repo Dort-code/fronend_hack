@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaTrash, FaLink } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 
 export function GroupsList({ groups, selectGroup, deleteGroup }) {
     return (
