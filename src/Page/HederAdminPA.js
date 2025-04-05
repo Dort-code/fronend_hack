@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { HeaderAD } from '../components/Header/HeaderAD';
 import { GroupsList } from '../components/Groups/GroupsList';
 import { GroupDetails } from '../components/Groups/GroupDetails';
@@ -11,19 +11,27 @@ export function HederAdminPA({ onLogout }) {
         { id: 2, text: "Итоги", form: "results" }
     ]);
 
-
-
     const [showMenu, setShowMenu] = useState(false);
     const [activeForm, setActiveForm] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [groups, setGroups] = useState([]);
     const [newGroupName, setNewGroupName] = useState("");
     const [newGroupLink, setNewGroupLink] = useState("");
+    const [allUsers, setAllUsers] = useState([
+        { id: 1, name: 'Иванов Иван' },
+        { id: 2, name: 'Петров Петр' },
+        { id: 3, name: 'Сидорова Анна' },
+        { id: 4, name: 'Кузнецов Дмитрий' },
+        { id: 5, name: 'Смирнова Ольга' }
+    ]);
+    const [showUserDropdown, setShowUserDropdown] = useState(false);
+    const [selectedUsers, setSelectedUsers] = useState([]);
     const menuRef = useRef(null);
+    const userDropdownRef = useRef(null);
 
     const handleLogoutClick = () => {
         console.log('User logged out');
-        onLogout(); // Вызываем функцию logout из пропсов
+        onLogout();
     };
 
     const toggleMenu = () => {
@@ -36,39 +44,39 @@ export function HederAdminPA({ onLogout }) {
         setShowMenu(false);
     };
 
+    // Закрытие выпадающего списка при клике вне его области
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (userDropdownRef.current && !userDropdownRef.current.contains(event.target)) {
+                setShowUserDropdown(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     const createGroup = () => {
         if (newGroupName.trim() && newGroupLink.trim()) {
-            const isTestGroup = newGroupName === 'Test' && newGroupLink === 'Test';
-
             const newGroup = {
                 id: Date.now(),
                 name: newGroupName,
                 link: newGroupLink,
                 conferenceLink: "",
                 documents: [],
-                users: isTestGroup ? [
-                    { id: 1, name: 'us1', isChairman: false },
-                    { id: 2, name: 'us2', isChairman: false },
-                    { id: 3, name: 'us3', isChairman: false }
-                ] : []
+                users: selectedUsers.map(userId => ({
+                    id: userId,
+                    name: allUsers.find(u => u.id === userId).name,
+                    isChairman: false
+                }))
             };
 
             setGroups([...groups, newGroup]);
             setNewGroupName("");
             setNewGroupLink("");
-        }
-        else if (newGroupName.trim() && newGroupLink.trim()) {
-            const newGroup = {
-                id: Date.now(),
-                name: newGroupName,
-                link: newGroupLink,
-                conferenceLink: "",
-                documents: [],
-                users: []
-            };
-            setGroups([...groups, newGroup]);
-            setNewGroupName("");
-            setNewGroupLink("");
+            setSelectedUsers([]);
         }
     };
 
@@ -111,6 +119,55 @@ export function HederAdminPA({ onLogout }) {
                         ...user,
                         isChairman: false
                     }))
+                };
+            }
+            return group;
+        }));
+    };
+
+    const toggleUserSelection = (userId) => {
+        setSelectedUsers(prev =>
+            prev.includes(userId)
+                ? prev.filter(id => id !== userId)
+                : [...prev, userId]
+        );
+    };
+
+    const addUsersToGroup = () => {
+        if (!selectedGroup || selectedUsers.length === 0) return;
+
+        const newUsers = selectedUsers
+            .filter(userId => !selectedGroup.users.some(u => u.id === userId))
+            .map(userId => ({
+                id: userId,
+                name: allUsers.find(u => u.id === userId).name,
+                isChairman: false
+            }));
+
+        if (newUsers.length > 0) {
+            setGroups(groups.map(group => {
+                if (group.id === selectedGroup.id) {
+                    return {
+                        ...group,
+                        users: [...group.users, ...newUsers]
+                    };
+                }
+                return group;
+            }));
+        }
+
+        setSelectedUsers([]);
+        setShowUserDropdown(false);
+    };
+
+    const removeUserFromGroup = (userId) => {
+        if (!selectedGroup) return;
+
+        setGroups(groups.map(group => {
+            if (group.id === selectedGroup.id) {
+                return {
+                    ...group,
+                    users: group.users.filter(user => user.id !== userId)
                 };
             }
             return group;
@@ -168,6 +225,56 @@ export function HederAdminPA({ onLogout }) {
                                                 className="text-input"
                                             />
                                         </div>
+                                        <div className="user-selection">
+                                            <button
+                                                type="button"
+                                                className="select-users-btn"
+                                                onClick={() => setShowUserDropdown(!showUserDropdown)}
+                                            >
+                                                {selectedUsers.length > 0
+                                                    ? `Выбрано пользователей: ${selectedUsers.length}`
+                                                    : "Выберите пользователей"}
+                                            </button>
+                                            {showUserDropdown && (
+                                                <div className="user-dropdown" ref={userDropdownRef}>
+                                                    <div className="dropdown-header">
+                                                        <h4>Выберите пользователей</h4>
+                                                    </div>
+                                                    <div className="users-list">
+                                                        {allUsers.map(user => (
+                                                            <div key={user.id} className="user-checkbox">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id={`user-${user.id}`}
+                                                                    checked={selectedUsers.includes(user.id)}
+                                                                    onChange={() => toggleUserSelection(user.id)}
+                                                                />
+                                                                <label htmlFor={`user-${user.id}`}>
+                                                                    {user.name}
+                                                                </label>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                    <div className="dropdown-actions">
+                                                        <button
+                                                            onClick={() => {
+                                                                setSelectedUsers([]);
+                                                                setShowUserDropdown(false);
+                                                            }}
+                                                            className="cancel-btn"
+                                                        >
+                                                            Отмена
+                                                        </button>
+                                                        <button
+                                                            onClick={() => setShowUserDropdown(false)}
+                                                            className="confirm-btn"
+                                                        >
+                                                            Готово
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
                                         <button
                                             onClick={createGroup}
                                             className="action-button"
@@ -205,6 +312,8 @@ export function HederAdminPA({ onLogout }) {
                                     }));
                                 }}
                                 onBack={() => setSelectedGroup(null)}
+                                onAddUsers={() => setShowUserDropdown(true)}
+                                onRemoveUser={removeUserFromGroup}
                             />
                         )}
                     </div>
@@ -219,7 +328,58 @@ export function HederAdminPA({ onLogout }) {
                 {!activeForm && (
                     <div className="empty-state">
                         <h3>Выберите раздел для работы</h3>
-                        <p>Используйте меня в верхнем левом углу для навигации</p>
+                        <p>Используйте меню в верхнем левом углу для навигации</p>
+                    </div>
+                )}
+
+                {selectedGroup && showUserDropdown && (
+                    <div className="user-dropdown-modal">
+                        <div className="dropdown-content" ref={userDropdownRef}>
+                            <div className="dropdown-header">
+                                <h4>Добавить пользователей в группу</h4>
+                                <button
+                                    onClick={() => setShowUserDropdown(false)}
+                                    className="close-dropdown"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                            <div className="users-list">
+                                {allUsers
+                                    .filter(user => !selectedGroup.users.some(u => u.id === user.id))
+                                    .map(user => (
+                                        <div key={user.id} className="user-checkbox">
+                                            <input
+                                                type="checkbox"
+                                                id={`add-user-${user.id}`}
+                                                checked={selectedUsers.includes(user.id)}
+                                                onChange={() => toggleUserSelection(user.id)}
+                                            />
+                                            <label htmlFor={`add-user-${user.id}`}>
+                                                {user.name}
+                                            </label>
+                                        </div>
+                                    ))}
+                            </div>
+                            <div className="dropdown-actions">
+                                <button
+                                    onClick={() => {
+                                        setSelectedUsers([]);
+                                        setShowUserDropdown(false);
+                                    }}
+                                    className="cancel-btn"
+                                >
+                                    Отмена
+                                </button>
+                                <button
+                                    onClick={addUsersToGroup}
+                                    disabled={selectedUsers.length === 0}
+                                    className="confirm-btn"
+                                >
+                                    Добавить выбранных
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
