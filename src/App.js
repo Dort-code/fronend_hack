@@ -38,43 +38,44 @@ function App() {
     };
 
     return (
-        <div className="app-container">
-            {!authInfo.isLoggedIn ? (
-                <header className="header">
-                    <div className="logo-container">
-                        <img src={logo} alt="Логотип ТНС Энерго" className="logo" />
-                    </div>
-                    <button
-                        className="login-btn"
-                        onClick={handleLoginClick}
-                        aria-label="Вход"
-                    >
-                        <FaSignInAlt size={18} />
-                        <span className="login-text">Войти</span>
-                    </button>
-                </header>
-            ) : authInfo.role === 'admin' ? (
-                <AdminPA onLogout={handleLogout} />
-            ) : authInfo.role === 'pred' ? (
-                <PredPA onLogout={handleLogout} />
-            ) : (
-                <UserPA onLogout={handleLogout} />
-            )}
-
-            {!authInfo.isLoggedIn && !showLoginModal && (
-                <div className="welcome-message">
-                    <h2>Добро пожаловать в систему ТНС Энерго</h2>
-                    <p>Пожалуйста, войдите в систему для доступа к функциям</p>
-                </div>
-            )}
-
-            {showLoginModal && (
-                <LoginPage
-                    onLogin={handleSuccessfulLogin}
-                    onClose={handleCloseModal}
-                />
-            )}
-        </div>
+        // <div className="app-container">
+        //     {!authInfo.isLoggedIn ? (
+        //         <header className="header">
+        //             <div className="logo-container">
+        //                 <img src={logo} alt="Логотип ТНС Энерго" className="logo" />
+        //             </div>
+        //             <button
+        //                 className="login-btn"
+        //                 onClick={handleLoginClick}
+        //                 aria-label="Вход"
+        //             >
+        //                 <FaSignInAlt size={18} />
+        //                 <span className="login-text">Войти</span>
+        //             </button>
+        //         </header>
+        //     ) : authInfo.role === 'admin' ? (
+        //         <AdminPA onLogout={handleLogout} />
+        //     ) : authInfo.role === 'pred' ? (
+        //         <PredPA onLogout={handleLogout} />
+        //     ) : (
+        //         <UserPA onLogout={handleLogout} />
+        //     )}
+        //
+        //     {!authInfo.isLoggedIn && !showLoginModal && (
+        //         <div className="welcome-message">
+        //             <h2>Добро пожаловать в систему ТНС Энерго</h2>
+        //             <p>Пожалуйста, войдите в систему для доступа к функциям</p>
+        //         </div>
+        //     )}
+        //
+        //     {showLoginModal && (
+        //         <LoginPage
+        //             onLogin={handleSuccessfulLogin}
+        //             onClose={handleCloseModal}
+        //         />
+        //     )}
+        // </div>
+        <UserPA/>
     );
 }
 

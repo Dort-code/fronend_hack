@@ -1,348 +1,484 @@
 import React, { useState, useEffect } from 'react';
-import { FaVoteYea, FaCheck, FaTimes, FaClock } from 'react-icons/fa';
+import {
+    FaVoteYea,
+    FaCheck,
+    FaTimes,
+    FaClock,
+    FaFileAlt,
+    FaUsers,
+    FaCalendarAlt,
+    FaChartBar
+} from 'react-icons/fa';
 import './MainUserPA.css';
 
-export function MainUserPA() {
-    // Состояние для ближайшей конференции
+export function MainUserPA({ userGroups }) {
+    const API_BASE_URL = 'https://your-api-endpoint.com/api';
     const [upcomingConference, setUpcomingConference] = useState(null);
-    const [pinCode, setPinCode] = useState('');
     const [conferenceHistory, setConferenceHistory] = useState([]);
     const [activeVotes, setActiveVotes] = useState([]);
     const [pastVotes, setPastVotes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error] = useState(null);
+    const [error, setError] = useState(null);
     const [selectedVote, setSelectedVote] = useState(null);
     const [selectedOption, setSelectedOption] = useState(null);
     const [hasVoted, setHasVoted] = useState(false);
+    const [groupFiles, setGroupFiles] = useState([]);
+    const [activeTab, setActiveTab] = useState('conference');
 
-    // Заглушка для загрузки данных о ближайшей конференции
-    const fetchUpcomingConference = () => {
-        setIsLoading(true);
-        setTimeout(() => {
-            setUpcomingConference({
-                id: 1,
-                title: "Ежеквартальное собрание акционеров",
-                date: "2023-11-15T14:00:00",
-                link: "https://meet.example.com/conf123",
-                form: "Форма голосования №45",
-                requiresPin: true
-            });
-            setIsLoading(false);
-        }, 1000);
-    };
-
-    // Заглушка для загрузки истории конференций
-    const fetchConferenceHistory = () => {
-        setTimeout(() => {
-            setConferenceHistory([
-                {
-                    id: 1,
-                    date: "2023-08-10",
-                    status: "Завершено",
-                    documentLink: "https://docs.example.com/protocol1.pdf"
-                },
-                {
-                    id: 2,
-                    date: "2023-05-15",
-                    status: "Завершено",
-                    documentLink: "https://docs.example.com/protocol2.pdf"
-                },
-                {
-                    id: 3,
-                    date: "2023-02-20",
-                    status: "В обработке",
-                    documentLink: null
-                }
-            ]);
-        }, 1500);
-    };
-
-    // Заглушка для загрузки активных голосований
-    const fetchActiveVotes = () => {
-        setTimeout(() => {
-            setActiveVotes([
-                {
-                    id: 1,
-                    question: "Утверждение годового отчета за 2023 год",
-                    description: "Голосование по утверждению финансового отчета компании",
-                    options: ["За", "Против", "Воздержался"],
-                    deadline: "2023-11-20T18:00:00",
-                    documentLink: "https://docs.example.com/report2023.pdf",
-                    hasVoted: false
-                },
-                {
-                    id: 2,
-                    question: "Избрание нового состава правления",
-                    description: "Голосование по кандидатурам в правление компании",
-                    options: ["За", "Против", "Воздержался"],
-                    deadline: "2023-11-25T18:00:00",
-                    documentLink: "https://docs.example.com/board_candidates.pdf",
-                    hasVoted: true
-                }
-            ]);
-        }, 1200);
-    };
-
-    // Заглушка для загрузки завершенных голосований
-    const fetchPastVotes = () => {
-        setTimeout(() => {
-            setPastVotes([
-                {
-                    id: 3,
-                    question: "Изменения в уставе компании",
-                    description: "Голосование по поправкам к уставу",
-                    options: ["За", "Против", "Воздержался"],
-                    deadline: "2023-08-15T18:00:00",
-                    documentLink: "https://docs.example.com/statute_changes.pdf",
-                    results: [65, 10, 25] // Проценты голосов
-                },
-                {
-                    id: 4,
-                    question: "Утверждение дивидендной политики",
-                    description: "Голосование по размеру и порядку выплаты дивидендов",
-                    options: ["За", "Против", "Воздержался"],
-                    deadline: "2023-05-20T18:00:00",
-                    documentLink: "https://docs.example.com/dividend_policy.pdf",
-                    results: [82, 8, 10]
-                }
-            ]);
-        }, 1300);
-    };
-
+    // Загрузка данных пользователя
     useEffect(() => {
-        fetchUpcomingConference();
-        fetchConferenceHistory();
-        fetchActiveVotes();
-        fetchPastVotes();
-    }, []);
+        const fetchUserData = async () => {
+            if (!userGroups || userGroups.length === 0) {
+                setIsLoading(false);
+                return;
+            }
 
-    const handlePinSubmit = (e) => {
-        e.preventDefault();
-        console.log('Submitted PIN:', pinCode);
-        // Здесь будет логика проверки пин-кода
-    };
+            setIsLoading(true);
+            setError(null);
 
-    const handleVoteSelect = (vote) => {
-        setSelectedVote(vote);
-        setSelectedOption(null);
-        setHasVoted(vote.hasVoted);
-    };
+            try {
+                const groupIds = userGroups.map(group => group.id);
+                const requests = [
+                    fetch(`${API_BASE_URL}/conferences/upcoming?groups=${groupIds.join(',')}`),
+                    fetch(`${API_BASE_URL}/conferences/history?groups=${groupIds.join(',')}`),
+                    fetch(`${API_BASE_URL}/votes?groups=${groupIds.join(',')}`),
+                    fetch(`${API_BASE_URL}/files?groups=${groupIds.join(',')}`)
+                ];
 
-    const handleOptionSelect = (option) => {
-        setSelectedOption(option);
-    };
+                const responses = await Promise.all(requests);
 
-    const submitVote = () => {
-        if (selectedVote && selectedOption) {
-            // Заглушка для отправки голоса
-            console.log(`Voted for option: ${selectedOption} in vote ${selectedVote.id}`);
+                // Проверка ошибок
+                const errors = responses.filter(response => !response.ok);
+                if (errors.length > 0) {
+                    throw new Error('Ошибка загрузки данных');
+                }
 
-            // Обновляем состояние - помечаем голосование как завершенное
+                const [conferenceData, historyData, votesData, filesData] = await Promise.all(
+                    responses.map(res => res.json())
+                );
+
+                // Обработка данных
+                setUpcomingConference(conferenceData.length > 0 ? conferenceData[0] : null);
+                setConferenceHistory(historyData);
+
+                const now = new Date();
+                setActiveVotes(votesData.filter(vote => new Date(vote.deadline) > now));
+                setPastVotes(votesData.filter(vote => new Date(vote.deadline) <= now));
+
+                setGroupFiles(filesData);
+            } catch (err) {
+                setError(err.message);
+                console.error('Ошибка загрузки:', err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, [userGroups]);
+
+    // Отправка голоса
+    const submitVote = async () => {
+        if (!selectedVote || !selectedOption) return;
+
+        setIsLoading(true);
+        try {
+            const response = await fetch(`${API_BASE_URL}/votes/${selectedVote.id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    option: selectedOption,
+                    userId: localStorage.getItem('userId')
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Ошибка отправки голоса');
+            }
+
+            // Обновление локального состояния
             setActiveVotes(activeVotes.map(vote =>
                 vote.id === selectedVote.id ? { ...vote, hasVoted: true } : vote
             ));
-
             setHasVoted(true);
             setSelectedVote(null);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    const formatConferenceDate = (dateString) => {
-        const options = {
+    const handleOptionSelect = (option) => {
+        if (!selectedVote || hasVoted || isLoading) return;
+        setSelectedOption(option);
+    };
+
+    // Форматирование дат
+    const formatDate = (dateString, options = {}) => {
+        const defaultOptions = {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
         };
-        return new Date(dateString).toLocaleDateString('ru-RU', options);
+        return new Date(dateString).toLocaleDateString('ru-RU', { ...defaultOptions, ...options });
     };
 
-    const formatDeadline = (dateString) => {
-        const options = {
-            day: 'numeric',
-            month: 'long',
-            hour: '2-digit',
-            minute: '2-digit'
-        };
-        return new Date(dateString).toLocaleDateString('ru-RU', options);
+    // Скачивание файла
+    const downloadFile = async (fileId, fileName) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/files/${fileId}/download`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            if (!response.ok) throw new Error('Ошибка загрузки файла');
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (err) {
+            setError(err.message);
+        }
     };
 
-    return (
-        <main className="main-user-pa">
-            <section className="upcoming-conference">
-                <h2>Ближайшая конференция</h2>
-
-                {isLoading ? (
-                    <div className="loading">Загрузка данных...</div>
-                ) : error ? (
-                    <div className="error">{error}</div>
-                ) : upcomingConference ? (
-                    <div className="conference-details">
-                        <div className="detail-row">
-                            <span className="detail-label">Название:</span>
-                            <span className="detail-value">{upcomingConference.title}</span>
-                        </div>
-                        <div className="detail-row">
-                            <span className="detail-label">Дата и время:</span>
-                            <span className="detail-value">{formatConferenceDate(upcomingConference.date)}</span>
-                        </div>
-                        <div className="detail-row">
-                            <span className="detail-label">Ссылка:</span>
-                            <a href={upcomingConference.link} className="detail-value link">
-                                Перейти к конференции
-                            </a>
-                        </div>
-                        <div className="detail-row">
-                            <span className="detail-label">Форма:</span>
-                            <span className="detail-value">{upcomingConference.form}</span>
-                        </div>
-
-                        {upcomingConference.requiresPin && (
-                            <form onSubmit={handlePinSubmit} className="pin-form">
-                                <label htmlFor="pin-code">Введите PIN-код:</label>
-                                <input
-                                    type="password"
-                                    id="pin-code"
-                                    value={pinCode}
-                                    onChange={(e) => setPinCode(e.target.value)}
-                                    placeholder="Введите ваш PIN"
-                                    required
-                                />
-                                <button type="submit" className="submit-pin">
-                                    Подтвердить
-                                </button>
-                            </form>
-                        )}
-                    </div>
-                ) : (
-                    <div className="no-conference">Нет запланированных конференций</div>
-                )}
-            </section>
-
-            <section className="active-votes">
-                <h2>Активные голосования</h2>
-                {activeVotes.length > 0 ? (
-                    <div className="votes-grid">
-                        {activeVotes.map(vote => (
-                            <div key={vote.id} className={`vote-card ${vote.hasVoted ? 'voted' : ''}`}>
-                                <h3>{vote.question}</h3>
-                                <p className="vote-description">{vote.description}</p>
-
-                                <div className="vote-meta">
-                                    <span className="deadline">
-                                        <FaClock /> До: {formatDeadline(vote.deadline)}
-                                    </span>
-                                    {vote.documentLink && (
-                                        <a href={vote.documentLink} className="document-link">
-                                            Документ для ознакомления
-                                        </a>
-                                    )}
-                                </div>
-
-                                {vote.hasVoted ? (
-                                    <div className="vote-status voted-status">
-                                        <FaCheck /> Вы уже проголосовали
+    // Рендер контента по табам
+    const renderTabContent = () => {
+        switch(activeTab) {
+            case 'conference':
+                return (
+                    <>
+                        <section className="upcoming-conference">
+                            <h2><FaCalendarAlt /> Ближайшая конференция</h2>
+                            {upcomingConference ? (
+                                <div className="conference-details">
+                                    <div className="detail-row">
+                                        <span className="detail-label">Название:</span>
+                                        <span className="detail-value">{upcomingConference.title}</span>
                                     </div>
-                                ) : (
-                                    <button
-                                        onClick={() => handleVoteSelect(vote)}
-                                        className="vote-button"
-                                    >
-                                        <FaVoteYea /> Проголосовать
-                                    </button>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="no-votes">Нет активных голосований</div>
-                )}
-            </section>
-
-            <section className="conference-history">
-                <h2>История конференций</h2>
-                {conferenceHistory.length > 0 ? (
-                    <div className="history-table">
-                        <div className="table-header">
-                            <div className="header-cell">Дата</div>
-                            <div className="header-cell">Статус</div>
-                            <div className="header-cell">Документы</div>
-                        </div>
-                        {conferenceHistory.map((conference) => (
-                            <div key={conference.id} className="table-row">
-                                <div className="table-cell">{conference.date}</div>
-                                <div className="table-cell">
-                                    <span className={`status-badge ${conference.status === 'Завершено' ? 'completed' : 'processing'}`}>
-                                        {conference.status}
-                                    </span>
-                                </div>
-                                <div className="table-cell">
-                                    {conference.documentLink ? (
-                                        <a href={conference.documentLink} className="document-link">
-                                            Скачать протокол
+                                    <div className="detail-row">
+                                        <span className="detail-label">Группа:</span>
+                                        <span className="detail-value">
+                      {userGroups.find(g => g.id === upcomingConference.groupId)?.name || 'Неизвестно'}
+                    </span>
+                                    </div>
+                                    <div className="detail-row">
+                                        <span className="detail-label">Дата и время:</span>
+                                        <span className="detail-value">{formatDate(upcomingConference.date)}</span>
+                                    </div>
+                                    <div className="detail-row">
+                                        <span className="detail-label">Ссылка:</span>
+                                        <a
+                                            href={upcomingConference.link}
+                                            className="detail-value link"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            Перейти к конференции
                                         </a>
-                                    ) : (
-                                        'Недоступно'
+                                    </div>
+                                    {upcomingConference.requiresPin && (
+                                        <div className="detail-row">
+                                            <span className="detail-label">PIN-код:</span>
+                                            <span className="detail-value pin-code">
+                        {upcomingConference.pinCode}
+                      </span>
+                                        </div>
                                     )}
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="no-history">Нет данных о прошлых конференциях</div>
-                )}
-            </section>
-
-            <section className="past-votes">
-                <h2>Завершенные голосования</h2>
-                {pastVotes.length > 0 ? (
-                    <div className="votes-grid">
-                        {pastVotes.map(vote => (
-                            <div key={vote.id} className="vote-card past">
-                                <h3>{vote.question}</h3>
-                                <p className="vote-description">{vote.description}</p>
-
-                                <div className="vote-meta">
-                                    <span className="deadline">
-                                        Завершено: {formatDeadline(vote.deadline)}
-                                    </span>
-                                    {vote.documentLink && (
-                                        <a href={vote.documentLink} className="document-link">
-                                            Итоговый документ
-                                        </a>
-                                    )}
+                            ) : (
+                                <div className="no-conference">
+                                    Нет запланированных конференций в ваших группах
                                 </div>
+                            )}
+                        </section>
 
-                                <div className="vote-results">
-                                    {vote.options.map((option, index) => (
-                                        <div key={index} className="result-row">
-                                            <span className="option-label">{option}:</span>
-                                            <div className="result-bar-container">
-                                                <div
-                                                    className="result-bar"
-                                                    style={{ width: `${vote.results[index]}%` }}
-                                                ></div>
-                                                <span className="result-percent">{vote.results[index]}%</span>
+                        <section className="conference-history">
+                            <h2><FaCalendarAlt /> История конференций</h2>
+                            {conferenceHistory.length > 0 ? (
+                                <div className="history-table">
+                                    <div className="table-header">
+                                        <div className="header-cell">Группа</div>
+                                        <div className="header-cell">Дата</div>
+                                        <div className="header-cell">Статус</div>
+                                        <div className="header-cell">Документы</div>
+                                    </div>
+                                    {conferenceHistory.map((conference) => (
+                                        <div key={conference.id} className="table-row">
+                                            <div className="table-cell">
+                                                {userGroups.find(g => g.id === conference.groupId)?.name || 'Неизвестно'}
+                                            </div>
+                                            <div className="table-cell">
+                                                {formatDate(conference.date, {
+                                                    year: 'numeric',
+                                                    month: 'short',
+                                                    day: 'numeric'
+                                                })}
+                                            </div>
+                                            <div className="table-cell">
+                        <span className={`status-badge ${
+                            conference.status === 'Завершено' ? 'completed' : 'processing'
+                        }`}>
+                          {conference.status}
+                        </span>
+                                            </div>
+                                            <div className="table-cell">
+                                                {conference.documentLink ? (
+                                                    <a
+                                                        href={conference.documentLink}
+                                                        className="document-link"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        Протокол
+                                                    </a>
+                                                ) : (
+                                                    'Недоступно'
+                                                )}
                                             </div>
                                         </div>
                                     ))}
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="no-votes">Нет данных о завершенных голосованиях</div>
-                )}
-            </section>
+                            ) : (
+                                <div className="no-history">
+                                    Нет данных о прошлых конференциях в ваших группах
+                                </div>
+                            )}
+                        </section>
+                    </>
+                );
 
-            {/* Модальное окно для голосования */}
+            case 'votes':
+                return (
+                    <>
+                        <section className="active-votes">
+                            <h2><FaVoteYea /> Активные голосования</h2>
+                            {activeVotes.length > 0 ? (
+                                <div className="votes-grid">
+                                    {activeVotes.map(vote => (
+                                        <div key={vote.id} className={`vote-card ${vote.hasVoted ? 'voted' : ''}`}>
+                                            <div className="vote-header">
+                                                <h3>{vote.question}</h3>
+                                                <span className="vote-group">
+                          {userGroups.find(g => g.id === vote.groupId)?.name || 'Неизвестно'}
+                        </span>
+                                            </div>
+                                            <p className="vote-description">{vote.description}</p>
+
+                                            <div className="vote-meta">
+                        <span className="deadline">
+                          <FaClock /> До: {formatDate(vote.deadline, {
+                            day: 'numeric',
+                            month: 'long'
+                        })}
+                        </span>
+                                                {vote.documentLink && (
+                                                    <a
+                                                        href={vote.documentLink}
+                                                        className="document-link"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        Документ для ознакомления
+                                                    </a>
+                                                )}
+                                            </div>
+
+                                            {vote.hasVoted ? (
+                                                <div className="vote-status voted-status">
+                                                    <FaCheck /> Вы уже проголосовали
+                                                </div>
+                                            ) : (
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedVote(vote);
+                                                        setSelectedOption(null);
+                                                        setHasVoted(false);
+                                                    }}
+                                                    className="vote-button"
+                                                    disabled={isLoading}
+                                                >
+                                                    <FaVoteYea /> Проголосовать
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="no-votes">
+                                    Нет активных голосований в ваших группах
+                                </div>
+                            )}
+                        </section>
+
+                        <section className="past-votes">
+                            <h2><FaChartBar /> Завершенные голосования</h2>
+                            {pastVotes.length > 0 ? (
+                                <div className="votes-grid">
+                                    {pastVotes.map(vote => (
+                                        <div key={vote.id} className="vote-card past">
+                                            <div className="vote-header">
+                                                <h3>{vote.question}</h3>
+                                                <span className="vote-group">
+                          {userGroups.find(g => g.id === vote.groupId)?.name || 'Неизвестно'}
+                        </span>
+                                            </div>
+                                            <p className="vote-description">{vote.description}</p>
+
+                                            <div className="vote-meta">
+                        <span className="deadline">
+                          Завершено: {formatDate(vote.deadline, {
+                            day: 'numeric',
+                            month: 'long'
+                        })}
+                        </span>
+                                                {vote.documentLink && (
+                                                    <a
+                                                        href={vote.documentLink}
+                                                        className="document-link"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        Итоговый документ
+                                                    </a>
+                                                )}
+                                            </div>
+
+                                            <div className="vote-results">
+                                                {vote.options.map((option, index) => (
+                                                    <div key={index} className="result-row">
+                                                        <span className="option-label">{option}:</span>
+                                                        <div className="result-bar-container">
+                                                            <div
+                                                                className="result-bar"
+                                                                style={{ width: `${vote.results[index]}%` }}
+                                                            ></div>
+                                                            <span className="result-percent">
+                                {vote.results[index]}%
+                              </span>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="no-votes">
+                                    Нет данных о завершенных голосованиях в ваших группах
+                                </div>
+                            )}
+                        </section>
+                    </>
+                );
+
+            case 'files':
+                return (
+                    <section className="group-files">
+                        <h2><FaFileAlt /> Файлы групп</h2>
+                        {groupFiles.length > 0 ? (
+                            <div className="files-grid">
+                                {groupFiles.map(file => (
+                                    <div key={file.id} className="file-card">
+                                        <div className="file-icon-container">
+                                            <FaFileAlt className="file-icon" />
+                                        </div>
+                                        <div className="file-info">
+                                            <span className="file-name">{file.name}</span>
+                                            <div className="file-meta">
+                        <span className="file-group">
+                          <FaUsers /> {userGroups.find(g => g.id === file.groupId)?.name || 'Неизвестно'}
+                        </span>
+                                                <span className="file-date">
+                          {formatDate(file.uploadDate, {
+                              day: 'numeric',
+                              month: 'long'
+                          })}
+                        </span>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={() => downloadFile(file.id, file.name)}
+                                            className="download-btn"
+                                        >
+                                            Скачать
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="no-files">
+                                Нет файлов в ваших группах
+                            </div>
+                        )}
+                    </section>
+                );
+
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <main className="main-user-pa">
+            {isLoading && (
+                <div className="loading-overlay">
+                    <div className="spinner"></div>
+                    <p>Загрузка данных...</p>
+                </div>
+            )}
+
+            {error && (
+                <div className="error-message">
+                    <p>{error}</p>
+                    <button onClick={() => setError(null)}>Закрыть</button>
+                </div>
+            )}
+
+            <div className="content-tabs">
+                <button
+                    className={`tab-button ${activeTab === 'conference' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('conference')}
+                >
+                    <FaCalendarAlt /> Конференции
+                </button>
+                <button
+                    className={`tab-button ${activeTab === 'votes' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('votes')}
+                >
+                    <FaVoteYea /> Голосования
+                </button>
+                <button
+                    className={`tab-button ${activeTab === 'files' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('files')}
+                >
+                    <FaFileAlt /> Файлы
+                </button>
+            </div>
+
+            <div className="tab-content">
+                {renderTabContent()}
+            </div>
+
             {selectedVote && (
                 <div className="vote-modal-overlay">
                     <div className="vote-modal-content">
                         <button
                             className="close-modal"
                             onClick={() => setSelectedVote(null)}
+                            disabled={isLoading}
                         >
                             <FaTimes />
                         </button>
@@ -357,7 +493,7 @@ export function MainUserPA() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Открыть документ для ознакомления
+                                <FaFileAlt /> Открыть документ для ознакомления
                             </a>
                         )}
 
@@ -375,22 +511,23 @@ export function MainUserPA() {
                         </div>
 
                         <div className="vote-deadline">
-                            <FaClock /> Голосование открыто до: {formatDeadline(selectedVote.deadline)}
+                            <FaClock /> Голосование открыто до: {formatDate(selectedVote.deadline)}
                         </div>
 
                         <div className="vote-actions">
                             <button
                                 onClick={() => setSelectedVote(null)}
                                 className="cancel-btn"
+                                disabled={isLoading}
                             >
                                 Отмена
                             </button>
                             <button
                                 onClick={submitVote}
-                                disabled={!selectedOption || hasVoted}
+                                disabled={!selectedOption || hasVoted || isLoading}
                                 className="submit-btn"
                             >
-                                {hasVoted ? 'Вы уже проголосовали' : 'Подтвердить выбор'}
+                                {isLoading ? 'Отправка...' : hasVoted ? 'Вы уже проголосовали' : 'Подтвердить выбор'}
                             </button>
                         </div>
                     </div>
