@@ -65,7 +65,6 @@ export function HederUserPA({ onLogout }){
             <button
                 className="logout-btn"
                 onClick={onLogout}
-                onClick={onLogout}
                 aria-label="Выход"
             >
                 <FaSignOutAlt size={20} />

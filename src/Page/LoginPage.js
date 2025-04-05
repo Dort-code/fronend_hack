@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaSignInAlt, FaTimes } from 'react-icons/fa';
+import { FaSignInAlt } from 'react-icons/fa';
 import './LoginPage.css';
 
 export function LoginPage({ onLogin, onClose }) {
