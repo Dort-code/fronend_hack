@@ -7,7 +7,7 @@ import {AdminPA} from './Page/AdminPA';
 
 function App() {
     return (
-        <Registration />
+        <AdminPA />
     );
 }
 

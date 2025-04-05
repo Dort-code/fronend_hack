@@ -179,7 +179,7 @@ export function GroupDetails({
                             <div key={user.id} className={`user-card ${user.isChairman ? 'chairman' : ''}`}>
                                 <div className="user-info">
                                     <span className="user-name">{user.name}</span>
-                                    {user.isChairman && <span className="chairman-badge">Председатель</span>}
+                                    {user.isChairman && <span className="chairman-badge"> Председатель</span>}
                                 </div>
                                 <div className="user-actions">
                                     {user.isChairman ? (
