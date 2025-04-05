@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaVoteYea, FaCheck, FaTimes, FaClock } from 'react-icons/fa';
-import './MainPredPA.css';
+import './MainPredPa.css';
 
 export function MainPredPA() {
     // Состояние для ближайшей конференции

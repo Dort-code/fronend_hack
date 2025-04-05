@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { UserPA } from './Page/UserPA';
 import { AdminPA } from './Page/AdminPA';
+import { PredPA } from './Page/PredPA';
 import './Page/HederUserPA.css';
 import logo from "./Page/TNS_Energo_logo.png";
 import { FaSignInAlt } from "react-icons/fa";
@@ -54,6 +55,8 @@ function App() {
                 </header>
             ) : authInfo.role === 'admin' ? (
                 <AdminPA onLogout={handleLogout} />
+            ) : authInfo.role === 'pred' ? (
+                <PredPA onLogout={handleLogout} />
             ) : (
                 <UserPA onLogout={handleLogout} />
             )}

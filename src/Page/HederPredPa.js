@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {FaBell, FaSignOutAlt} from "react-icons/fa";
 import logo from "./TNS_Energo_logo.png";
-import './HederPredPA.css';
+import './HederPredPa.css';
 
 export function HederPredPA({ onLogout }){
     const [notificationsList, setNotificationsList] = useState([
@@ -12,8 +12,6 @@ export function HederPredPA({ onLogout }){
     const unreadCount = notificationsList.filter(n => !n.read).length;
     const [showNotifications, setShowNotifications] = useState(false);
     const notificationsRef = useRef(null);
-
-
 
     const toggleNotifications = () => {
         const newShowState = !showNotifications;
@@ -64,7 +62,6 @@ export function HederPredPA({ onLogout }){
 
             <button
                 className="logout-btn"
-                onClick={onLogout}
                 onClick={onLogout}
                 aria-label="Выход"
             >

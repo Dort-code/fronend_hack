@@ -1,6 +1,5 @@
-// LoginPage.js
 import React, { useState } from 'react';
-import { FaSignInAlt } from 'react-icons/fa';
+import { FaSignInAlt, FaTimes } from 'react-icons/fa';
 import './LoginPage.css';
 
 export function LoginPage({ onLogin, onClose }) {
@@ -38,11 +37,11 @@ export function LoginPage({ onLogin, onClose }) {
         if (username === 'admin' && password === 'admin123') {
             return { authenticated: true, role: 'admin' };
         }
-        if (username === 'user' && password === 'user123') {
-            return { authenticated: true, role: 'user' };
-        }
         if (username === 'pred' && password === 'pred123') {
             return { authenticated: true, role: 'pred' };
+        }
+        if (username === 'user' && password === 'user123') {
+            return { authenticated: true, role: 'user' };
         }
         return { authenticated: false };
     };
