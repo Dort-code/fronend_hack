@@ -1,0 +1,44 @@
+<changelist name="Uncommitted_changes_before_Update_at_05_04_2025_23_16_[Changes]" date="1743884179642" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_04_2025_23_16_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 05.04.2025 23:16 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="node_modules/.cache/default-development/index.pack.old" />
+    <option name="AFTER_PATH" value="node_modules/.cache/default-development/index.pack.old" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_04_2025_23_16_[Changes]/index.pack.old" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="node_modules/.cache/default-development/2.pack" />
+    <option name="AFTER_PATH" value="node_modules/.cache/default-development/2.pack" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_04_2025_23_16_[Changes]/2.pack" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="node_modules/.cache/default-development/1.pack" />
+    <option name="AFTER_PATH" value="node_modules/.cache/default-development/1.pack" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_04_2025_23_16_[Changes]/1.pack" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="node_modules/.cache/default-development/3.pack" />
+    <option name="AFTER_PATH" value="node_modules/.cache/default-development/3.pack" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_04_2025_23_16_[Changes]/3.pack" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="node_modules/.cache/default-development/0.pack" />
+    <option name="AFTER_PATH" value="node_modules/.cache/default-development/0.pack" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_04_2025_23_16_[Changes]/0.pack" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="node_modules/.cache/default-development/5.pack" />
+    <option name="AFTER_PATH" value="node_modules/.cache/default-development/5.pack" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_04_2025_23_16_[Changes]/5.pack" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="node_modules/.cache/default-development/index.pack" />
+    <option name="AFTER_PATH" value="node_modules/.cache/default-development/index.pack" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_04_2025_23_16_[Changes]/index.pack" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="node_modules/.cache/default-development/4.pack" />
+    <option name="AFTER_PATH" value="node_modules/.cache/default-development/4.pack" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_04_2025_23_16_[Changes]/4.pack" />
+  </binary>
+</changelist>
