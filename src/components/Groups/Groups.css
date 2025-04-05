@@ -1,68 +1,94 @@
-/* ========== BASE STYLES ========== */
 :root {
-    --primary-color: #2196F3;
-    --success-color: #4CAF50;
-    --danger-color: #f44336;
-    --warning-color: #ff9800;
-    --dark-color: #2c3e50;
-    --gray-color: #6c757d;
+    /* Цвета */
+    --primary: #2196F3;
+    --success: #4CAF50;
+    --danger: #f44336;
+    --warning: #ff9800;
+    --dark: #2c3e50;
+    --gray: #6c757d;
     --light-gray: #f8f9fa;
     --white: #fff;
-    --shadow: 0 2px 10px rgba(0,0,0,0.1);
-    --chairman-color: #e3f2fd;
-    --border-radius: 4px;
+    --chairman-bg: #e3f2fd;
+
+    /* Тени и скругления */
+    --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
+    --shadow-md: 0 5px 15px rgba(0,0,0,0.1);
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
 }
 
-/* ========== UTILITY CLASSES ========== */
-.flex, .group-header, .user-actions, .action-btn, .back-btn, .section-title {
-    display: flex;
+/* Базовые стили */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--dark);
+    line-height: 1.5;
 }
 
-.flex-center, .action-btn, .back-btn, .section-title {
-    align-items: center;
-}
+/* Утилитарные классы */
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; }
+.gap-5 { gap: 5px; }
+.gap-10 { gap: 10px; }
+.gap-15 { gap: 15px; }
 
-.gap-5, .action-btn, .back-btn, .section-title { gap: 5px; }
-.gap-10, .section-title { gap: 10px; }
-
-/* ========== GROUP DETAILS COMPONENT ========== */
+/* Компоненты */
 .group-details-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
+/* Шапка группы */
 .group-header {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 30px;
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
 }
 
-.back-btn {
-    background: var(--gray-color);
-    color: var(--white);
+/* Кнопки */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     padding: 8px 15px;
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
     transition: all 0.2s;
+    cursor: pointer;
+    border: none;
 }
 
-.back-btn:hover {
-    background: #5a6268;
+.btn-primary {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: var(--white);
+}
+
+.btn-gray {
+    background: var(--gray);
+    color: var(--white);
+}
+
+.btn:hover:not(:disabled) {
+    filter: brightness(95%);
     transform: translateY(-1px);
 }
 
-.full-width-section {
-    margin-bottom: 30px;
+.btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
 }
 
-.section-title {
-    margin-bottom: 20px;
-    color: var(--dark-color);
-    font-weight: 500;
-}
-
-/* Users Grid Styles */
+/* Карточки пользователей */
 .users-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -72,75 +98,50 @@
 
 .user-card {
     background: var(--white);
-    border-radius: var(--border-radius);
     padding: 15px;
-    box-shadow: var(--shadow);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
     transition: all 0.2s;
     border-left: 4px solid transparent;
 }
 
 .user-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-md);
 }
 
 .user-card.chairman {
-    background-color: var(--chairman-color);
-    border-left-color: var(--primary-color);
+    background-color: var(--chairman-bg);
+    border-left-color: var(--primary);
 }
 
-.user-info {
+/* Секция документов */
+.documents-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: var(--light-gray);
+    border-radius: var(--radius-md);
+}
+
+.document-upload {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.document-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: var(--radius-sm);
     margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.user-name {
-    font-weight: 500;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.user-position {
-    background: var(--primary-color);
-    color: var(--white);
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 0.75em;
-    display: inline-block;
-}
-
-.user-actions {
-    justify-content: flex-end;
-}
-
-.action-btn {
-    padding: 5px 10px;
-    border-radius: var(--border-radius);
-    font-size: 0.85em;
-    transition: all 0.2s;
-}
-
-.assign-btn {
-    background: var(--primary-color);
-    color: var(--white);
-}
-
-.remove-chairman {
-    background: var(--danger-color);
-    color: var(--white);
-}
-
-.action-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.action-btn:not(:disabled):hover, .btn:hover {
-    filter: brightness(95%);
-    transform: translateY(-1px);
-}
-
-/* ========== ANIMATIONS ========== */
+/* Анимации */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -151,16 +152,7 @@
     to { transform: translateY(0); opacity: 1; }
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-}
-
-.loading-state {
-    animation: pulse 1.5s infinite;
-}
-
-/* ========== RESPONSIVE ========== */
+/* Адаптивность */
 @media (max-width: 768px) {
     .group-header {
         flex-direction: column;
@@ -175,11 +167,6 @@
     .user-card {
         padding: 12px;
     }
-
-    .modal-content {
-        width: 95%;
-        padding: 15px;
-    }
 }
 
 @media (max-width: 480px) {
@@ -187,13 +174,8 @@
         padding: 15px;
     }
 
-    .action-btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .table-row {
+    .document-upload {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
     }
 }
