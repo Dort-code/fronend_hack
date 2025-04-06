@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     FaVoteYea,
     FaCheck,
@@ -11,7 +11,7 @@ import {
 } from 'react-icons/fa';
 import './MainUserPA.css';
 
-export function MainUserPA({ userGroups }) {
+export function MainUserPA({userGroups}) {
     const API_BASE_URL = 'https://your-api-endpoint.com/api';
     const [upcomingConference, setUpcomingConference] = useState(null);
     const [conferenceHistory, setConferenceHistory] = useState([]);
@@ -102,7 +102,7 @@ export function MainUserPA({ userGroups }) {
 
             // Обновление локального состояния
             setActiveVotes(activeVotes.map(vote =>
-                vote.id === selectedVote.id ? { ...vote, hasVoted: true } : vote
+                vote.id === selectedVote.id ? {...vote, hasVoted: true} : vote
             ));
             setHasVoted(true);
             setSelectedVote(null);
@@ -127,7 +127,7 @@ export function MainUserPA({ userGroups }) {
             hour: '2-digit',
             minute: '2-digit'
         };
-        return new Date(dateString).toLocaleDateString('ru-RU', { ...defaultOptions, ...options });
+        return new Date(dateString).toLocaleDateString('ru-RU', {...defaultOptions, ...options});
     };
 
     // Скачивание файла
@@ -156,12 +156,12 @@ export function MainUserPA({ userGroups }) {
 
     // Рендер контента по табам
     const renderTabContent = () => {
-        switch(activeTab) {
+        switch (activeTab) {
             case 'conference':
                 return (
                     <>
                         <section className="upcoming-conference">
-                            <h2><FaCalendarAlt /> Ближайшая конференция</h2>
+                            <h2><FaCalendarAlt/> Ближайшая конференция</h2>
                             {upcomingConference ? (
                                 <div className="conference-details">
                                     <div className="detail-row">
@@ -206,7 +206,7 @@ export function MainUserPA({ userGroups }) {
                         </section>
 
                         <section className="conference-history">
-                            <h2><FaCalendarAlt /> История конференций</h2>
+                            <h2><FaCalendarAlt/> История конференций</h2>
                             {conferenceHistory.length > 0 ? (
                                 <div className="history-table">
                                     <div className="table-header">
@@ -264,7 +264,7 @@ export function MainUserPA({ userGroups }) {
                 return (
                     <>
                         <section className="active-votes">
-                            <h2><FaVoteYea /> Активные голосования</h2>
+                            <h2><FaVoteYea/> Активные голосования</h2>
                             {activeVotes.length > 0 ? (
                                 <div className="votes-grid">
                                     {activeVotes.map(vote => (
@@ -279,7 +279,7 @@ export function MainUserPA({ userGroups }) {
 
                                             <div className="vote-meta">
                         <span className="deadline">
-                          <FaClock /> До: {formatDate(vote.deadline, {
+                          <FaClock/> До: {formatDate(vote.deadline, {
                             day: 'numeric',
                             month: 'long'
                         })}
@@ -298,7 +298,7 @@ export function MainUserPA({ userGroups }) {
 
                                             {vote.hasVoted ? (
                                                 <div className="vote-status voted-status">
-                                                    <FaCheck /> Вы уже проголосовали
+                                                    <FaCheck/> Вы уже проголосовали
                                                 </div>
                                             ) : (
                                                 <button
@@ -310,7 +310,7 @@ export function MainUserPA({ userGroups }) {
                                                     className="vote-button"
                                                     disabled={isLoading}
                                                 >
-                                                    <FaVoteYea /> Проголосовать
+                                                    <FaVoteYea/> Проголосовать
                                                 </button>
                                             )}
                                         </div>
@@ -324,7 +324,7 @@ export function MainUserPA({ userGroups }) {
                         </section>
 
                         <section className="past-votes">
-                            <h2><FaChartBar /> Завершенные голосования</h2>
+                            <h2><FaChartBar/> Завершенные голосования</h2>
                             {pastVotes.length > 0 ? (
                                 <div className="votes-grid">
                                     {pastVotes.map(vote => (
@@ -363,7 +363,7 @@ export function MainUserPA({ userGroups }) {
                                                         <div className="result-bar-container">
                                                             <div
                                                                 className="result-bar"
-                                                                style={{ width: `${vote.results[index]}%` }}
+                                                                style={{width: `${vote.results[index]}%`}}
                                                             ></div>
                                                             <span className="result-percent">
                                 {vote.results[index]}%
@@ -387,19 +387,19 @@ export function MainUserPA({ userGroups }) {
             case 'files':
                 return (
                     <section className="group-files">
-                        <h2><FaFileAlt /> Файлы групп</h2>
+                        <h2><FaFileAlt/> Файлы групп</h2>
                         {groupFiles.length > 0 ? (
                             <div className="files-grid">
                                 {groupFiles.map(file => (
                                     <div key={file.id} className="file-card">
                                         <div className="file-icon-container">
-                                            <FaFileAlt className="file-icon" />
+                                            <FaFileAlt className="file-icon"/>
                                         </div>
                                         <div className="file-info">
                                             <span className="file-name">{file.name}</span>
                                             <div className="file-meta">
                         <span className="file-group">
-                          <FaUsers /> {userGroups.find(g => g.id === file.groupId)?.name || 'Неизвестно'}
+                          <FaUsers/> {userGroups.find(g => g.id === file.groupId)?.name || 'Неизвестно'}
                         </span>
                                                 <span className="file-date">
                           {formatDate(file.uploadDate, {
@@ -452,19 +452,19 @@ export function MainUserPA({ userGroups }) {
                     className={`tab-button ${activeTab === 'conference' ? 'active' : ''}`}
                     onClick={() => setActiveTab('conference')}
                 >
-                    <FaCalendarAlt /> Конференции
+                    <FaCalendarAlt/> Конференции
                 </button>
                 <button
                     className={`tab-button ${activeTab === 'votes' ? 'active' : ''}`}
                     onClick={() => setActiveTab('votes')}
                 >
-                    <FaVoteYea /> Голосования
+                    <FaVoteYea/> Голосования
                 </button>
                 <button
                     className={`tab-button ${activeTab === 'files' ? 'active' : ''}`}
                     onClick={() => setActiveTab('files')}
                 >
-                    <FaFileAlt /> Файлы
+                    <FaFileAlt/> Файлы
                 </button>
             </div>
 
@@ -480,7 +480,7 @@ export function MainUserPA({ userGroups }) {
                             onClick={() => setSelectedVote(null)}
                             disabled={isLoading}
                         >
-                            <FaTimes />
+                            <FaTimes/>
                         </button>
 
                         <h3>{selectedVote.question}</h3>
@@ -493,7 +493,7 @@ export function MainUserPA({ userGroups }) {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <FaFileAlt /> Открыть документ для ознакомления
+                                <FaFileAlt/> Открыть документ для ознакомления
                             </a>
                         )}
 
@@ -511,7 +511,7 @@ export function MainUserPA({ userGroups }) {
                         </div>
 
                         <div className="vote-deadline">
-                            <FaClock /> Голосование открыто до: {formatDate(selectedVote.deadline)}
+                            <FaClock/> Голосование открыто до: {formatDate(selectedVote.deadline)}
                         </div>
 
                         <div className="vote-actions">

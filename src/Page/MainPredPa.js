@@ -7,7 +7,7 @@ import {
     FaChartBar,
     FaPlus
 } from 'react-icons/fa';
-import './MainPredPA.css';
+import './MainPredPa.css';
 
 export function MainPredPA({ userGroups }) {
     const API_BASE_URL = 'https://your-api-endpoint.com/api';

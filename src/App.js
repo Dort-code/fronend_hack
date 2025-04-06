@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { UserPA } from './Page/UserPA';
 import { AdminPA } from './Page/AdminPA';
 import { PredPA } from './Page/PredPA';
-import './Page/HederUserPA.css';
+import './components/User/HederUserPA.css';
 import logo from "./Page/TNS_Energo_logo.png";
 import { FaSignInAlt } from "react-icons/fa";
 import { LoginPage } from './Page/LoginPage';

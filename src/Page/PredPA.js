@@ -1,5 +1,5 @@
-import { MainPredPA } from "./MainPredPa";
-import { HederPredPA } from "./HederPredPa";
+import { MainPredPA } from "../components/Pred/MainPredPa";
+import { HederPredPA } from "../components/Pred/HederPredPa";
 
 export function PredPA({ onLogout }) {
     return(

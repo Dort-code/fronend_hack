@@ -1,0 +1,246 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    height: 70px;
+    z-index: 100;
+}
+
+.header-left, .header-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.header-right {
+    justify-content: flex-end;
+}
+
+/* Кнопка уведомлений */
+.notification-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.notification-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff4d4f;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+}
+
+/* Логотип */
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+}
+
+.user-role {
+    margin-top: 5px;
+    background-color: #f0f7ff;
+    color: #0066cc;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Кнопка выхода */
+.logout-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logout-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.logout-text {
+    font-size: 0.9rem;
+}
+
+/* Выпадающее меню уведомлений */
+.notification-dropdown {
+    color: black;
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    width: 350px;
+    max-height: 500px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown-header {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.unread-count {
+    background-color: #f0f7ff;
+    color: #0066cc;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+.notifications-list {
+    padding: 8px 0;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+    color: black;
+    background-color: #f9f9f9;
+}
+
+.notification-item.unread {
+    color: black;
+    background-color: #f8fafd;
+}
+
+.notification-icon {
+    margin-right: 12px;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-text {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.notification-date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.notification-chevron {
+    color: #999;
+    font-size: 0.9rem;
+    margin-left: 8px;
+}
+
+.protocol-submenu {
+    background-color: #f9f9f9;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin: 4px 0;
+}
+
+.protocol-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px 10px 44px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.protocol-item:hover {
+    background-color: #f0f7ff;
+}
+
+.protocol-icon {
+    margin-right: 12px;
+    color: #4a6bdf;
+    font-size: 1rem;
+}
+
+.protocol-content {
+    flex: 1;
+}
+
+.protocol-text {
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+}
+
+.protocol-date {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+/* Основная область контента */
+.pred-content-area {
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.content-section {
+    color: black;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
