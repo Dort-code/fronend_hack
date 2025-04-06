@@ -5,22 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="52bf67c3-d63c-45ea-a9ff-45fde35573e7" name="Changes" comment="Aboba">
-      <change afterPath="$PROJECT_DIR$/src/Page/MainAdminPA.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Page/MainAdminPA.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/1.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/2.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/2.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Page/AdminPA.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Page/AdminPA.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Page/MainPredPa.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Page/MainPredPa.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Groups/GroupDetails.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Groups/GroupDetails.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Groups/GroupDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Groups/GroupDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Groups/Groups.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Groups/GroupsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Groups/GroupsList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/HederAdminPA.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/HederAdminPA.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/HederAdminPA.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/HederAdminPA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/HederPredPa.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pred/HederPredPa.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/HederPredPa.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pred/HederPredPa.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/HederUserPA.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/User/HederUserPA.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/HederUserPA.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/User/HederUserPA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/MainAdminPA.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/MainAdminPA.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/MainAdminPA.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/MainAdminPA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/MainPredPa.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pred/MainPredPa.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/MainPredPa.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pred/MainPredPa.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/MainUserPA.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/User/MainUserPA.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/MainUserPA.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/User/MainUserPA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/PredPA.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Page/PredPA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/Protocol.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pred/Protocol/Protocol.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/Protocol.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pred/Protocol/Protocol.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page/UserPA.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Page/UserPA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Groups/GroupDetails.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/Groups/GroupDetails.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Groups/GroupDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/Groups/GroupDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Groups/GroupsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/Groups/GroupsList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header/HeaderAD.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/Header/HeaderAD.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header/HeaderAD.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/Header/HeaderAD.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Results/Results.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/Results/Results.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Results/Results.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/Results/Results.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,8 +110,11 @@
       <recent name="C:\Users\Dell\WebstormProjects\fronend_hack\src\Page" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\alex1\OneDrive\Документы\GitHub\fronend_hack\src\components\Pred\Protocol" />
+      <recent name="C:\Users\alex1\OneDrive\Документы\GitHub\fronend_hack\src\components\Pred" />
+      <recent name="C:\Users\alex1\OneDrive\Документы\GitHub\fronend_hack\src\components\User" />
+      <recent name="C:\Users\alex1\OneDrive\Документы\GitHub\fronend_hack\src\components\Admin" />
       <recent name="C:\Users\Dell\WebstormProjects\fronend_hack\src\Page" />
-      <recent name="C:\Users\Dell\WebstormProjects\untitled\src" />
     </key>
   </component>
   <component name="RunManager" selected="npm.npm start">

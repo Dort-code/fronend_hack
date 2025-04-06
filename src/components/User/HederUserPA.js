@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaBell, FaSignOutAlt, FaEnvelope, FaUsers, FaVoteYea, FaFileDownload } from "react-icons/fa";
-import logo from "./TNS_Energo_logo.png";
+import logo from "../../Page/TNS_Energo_logo.png";
 import './HederUserPA.css';
 
 export function HederUserPA({ onLogout, userId }) {

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaSignOutAlt, FaFileAlt, FaChevronDown, FaChevronUp, FaBell } from "react-icons/fa";
 import { FiAlignJustify } from 'react-icons/fi';
-import { Protocol } from './Protocol';
-import logo from "./TNS_Energo_logo.png";
+import { Protocol } from './Protocol/Protocol';
+import logo from "../../Page/TNS_Energo_logo.png";
 import './HederPredPa.css';
 
 export function HederPredPA({ onLogout }) {

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { HeaderAD } from '../components/Header/HeaderAD';
-import { GroupsList } from '../components/Groups/GroupsList';
-import { GroupDetails } from '../components/Groups/GroupDetails';
-import { Results } from '../components/Results/Results';
+import { HeaderAD } from './Header/HeaderAD';
+import { GroupsList } from './Groups/GroupsList';
+import { GroupDetails } from './Groups/GroupDetails';
+import { Results } from './Results/Results';
 import './HederAdminPA.css';
 
 export function HederAdminPA({ onLogout }) {

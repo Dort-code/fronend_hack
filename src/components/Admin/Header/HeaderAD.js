@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { FiAlignJustify } from 'react-icons/fi';
-import logo from "../../Page/TNS_Energo_logo.png";
+import logo from "../../../Page/TNS_Energo_logo.png";
 import './HeaderAD.css';
 
 export function HeaderAD({ toggleMenu, handleLogout, showMenu, children }) {

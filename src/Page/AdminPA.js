@@ -1,5 +1,5 @@
-import {HederAdminPA} from "./HederAdminPA";
-import {MainAdminPA} from "./MainAdminPA";
+import {HederAdminPA} from "../components/Admin/HederAdminPA";
+import {MainAdminPA} from "../components/Admin/MainAdminPA";
 
 export function AdminPA({onLogout}) {
     return(
