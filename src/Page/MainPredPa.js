@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
-    FaFileAlt,
     FaUsers,
     FaCalendarAlt,
     FaVoteYea,
     FaChartBar,
     FaPlus
 } from 'react-icons/fa';
-import './MainPredPA.css';
+import './MainPredPa.css';
 
 export function MainPredPA({ userGroups }) {
     const API_BASE_URL = 'https://your-api-endpoint.com/api';
